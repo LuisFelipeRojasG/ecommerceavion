@@ -6,10 +6,16 @@ import { IoMdMenu } from 'react-icons/io'
 import useAvionContext from '../context/UseContext'
 import MobileMenu from './MobileMenu'
 import logo from '../assets/group98.png'
+import { useEffect } from 'react'
+import { allCategories } from '../api/indexApi'
 
 function NavBar() {
 
-    const { openMenu, setOpenMenu } = useAvionContext();
+    const { openMenu, setOpenMenu, getAllCategories, dataCategories } = useAvionContext()
+
+    useEffect(() => {
+        getAllCategories(allCategories)
+    }, [])
 
   return (
     <nav className='fixed top-0 w-full flex flex-col bg-BorderGrey'>
@@ -40,36 +46,13 @@ function NavBar() {
         </section>
         <section className='hidden md:flex justify-center h-[66px]'>
             <ul className='md:flex md:items-center md:text-Dark sm:hidden font-Open_Sans text-Headline_four'>
-            <li className='px-4'>
-                    <NavLink to='/all'>
-                        All
-                    </NavLink>
-                </li>
-                <li className='px-4'>
-                    <NavLink to="/clothes">
-                        Clothes
-                    </NavLink>
-                </li>
-                <li className='px-4'>
-                    <NavLink to='/electronics'>
-                        Electronics
-                    </NavLink>
-                </li>
-                <li className='px-4'>
-                    <NavLink to='/forniture'>
-                        Forniture
-                    </NavLink>
-                </li>
-                <li className='px-4'>
-                    <NavLink to='/shoes'>
-                        Shoes
-                    </NavLink>
-                </li>
-                <li className='px-4'>
-                    <NavLink to='/miscellaneous'>
-                        Miscellaneous
-                    </NavLink>
-                </li>
+                {
+                    dataCategories?.slice(0, 6).map(category => (
+                        <li className='p-4 font-Open_Sans text-Headline_four' key={category.slug}>
+                            <NavLink to={`${category.url}`}>{category.name}</NavLink>
+                        </li>
+                    ))
+                }
             </ul>
         </section>
         <section className={`justify-center h-auto ${openMenu}`}>

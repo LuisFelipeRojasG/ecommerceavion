@@ -6,10 +6,12 @@ import { allProductos } from '../api/indexApi'
 
 function Listings() {
   const navigate = useNavigate();
-  const { getProductsCategory, dataProductsCategory } = useAvionContext();
+  const { dataProducts, getAllProducts } = useAvionContext();
+
 
   useEffect(() => {
-    console.log(getProductsCategory(allProductos))
+    getAllProducts(allProductos)
+      
   }, [])
 
   return (
@@ -17,7 +19,7 @@ function Listings() {
         <h1 className='mb-14 text-Headline_two text-Dark'>You might also like</h1>
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center p-10 lg:px-6'>
           {
-            dataProductsCategory?.slice(0, 4).map(product => (
+            dataProducts?.slice(0, 4).map(product => (
               <ProductCard 
                 key={product.id} 
                 data={product}
