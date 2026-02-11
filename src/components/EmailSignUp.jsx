@@ -2,7 +2,7 @@ import { FaCheckCircle } from "react-icons/fa";
 
 function EmailSignUp() {
   return (
-    <section className="w-full h-[600px] flex flex-col items-center bg-[url(src/assets/email_background.svg)] bg-cover" >
+    <section className="w-full h-[600px] flex flex-col items-center bg-[url(src/assets/imageSign.webp)] bg-cover" >
         <div className="w-[480px] flex flex-col items-center justify-center h-full text-Light">
             <h3 className="pb-6 text-Headline_two font-Roboto ">Join the club and get the benefits</h3>
             <p className="w-[430px] pb-8 md:text-center text-Body_small font-Open_Sans">Sign up for our newsletter and receive exclusive offers on new ranges, sales, pop up stores and more</p>

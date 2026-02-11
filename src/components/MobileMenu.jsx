@@ -10,6 +10,9 @@ function MobileMenu() {
         setOpenMenu('hidden')
     }
     } className="md:hidden bg-BorderGrey">
+        <p className="p-4 font-Open_Sans text-Headline_four">
+            <NavLink to='/all'>All Products</NavLink>
+        </p>
         {
             dataCategories?.slice(0, 6).map(category => (
                 <li className='p-4 font-Open_Sans text-Headline_four' key={category.slug}>

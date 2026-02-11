@@ -1,4 +1,4 @@
-import escenario from '../assets/escenario.svg'
+import imageBlock from '../assets/imageBlock.webp'
 
 function FeatureDown() {
     return (
@@ -8,10 +8,9 @@ function FeatureDown() {
                 <p className='pb-[150px] text-Body_small font-Open_Sans'>A global brand with local beginnings, our story begain in a small studio in South London in early 2014</p>
                 <button className='w-full p-4 bg-Primary'>View collection</button>
             </div>
-            <figure className="w-auto">
-                <img src={escenario} alt='Feature' />
+            <figure className="max-w-[630px] h-[468px] md:w-[650px] md:h-full">
+                <img src={imageBlock} alt='Feature' className='w-full h-full object-cover' />
             </figure>
-            
         </section>
     )
 }

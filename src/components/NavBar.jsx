@@ -11,11 +11,12 @@ import { allCategories } from '../api/indexApi'
 
 function NavBar() {
 
-    const { openMenu, setOpenMenu, getAllCategories, dataCategories } = useAvionContext()
+    const { openMenu, setOpenMenu, getAllCategories, dataCategories, getProductsCategory } = useAvionContext()
 
     useEffect(() => {
         getAllCategories(allCategories)
     }, [])
+
 
   return (
     <nav className='fixed top-0 w-full flex flex-col bg-BorderGrey'>
@@ -46,12 +47,22 @@ function NavBar() {
         </section>
         <section className='hidden md:flex justify-center h-[66px]'>
             <ul className='md:flex md:items-center md:text-Dark sm:hidden font-Open_Sans text-Headline_four'>
+                <li>
+                    <NavLink to='/all_products'>All Products</NavLink>
+                </li>
                 {
-                    dataCategories?.slice(0, 6).map(category => (
-                        <li className='p-4 font-Open_Sans text-Headline_four' key={category.slug}>
-                            <NavLink to={`${category.url}`}>{category.name}</NavLink>
-                        </li>
-                    ))
+                    dataCategories?.slice(0, 6).map(category => {
+                        const key = category?.slug || category?.id || category
+                        const label = category?.name || category
+                        const categoryUrl = category?.url
+                        return (
+                            <li className='p-4 font-Open_Sans text-Headline_four' key={key}>
+                                <NavLink to={`/products/${category.slug}`} onClick={() => {
+                                    getProductsCategory(categoryUrl)
+                                }}>{label}</NavLink>
+                            </li>
+                        )
+                    })
                 }
             </ul>
         </section>

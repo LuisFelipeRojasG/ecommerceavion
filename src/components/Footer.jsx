@@ -1,7 +1,12 @@
+import { NavLink } from 'react-router'
 import { FaLinkedin, FaFacebookSquare, FaInstagram } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
+import useAvionContext from '../context/UseContext'
 
 function Footer() {
+
+    const { dataCategories, getProductsCategory } = useAvionContext()
+
   return (
     <section className="w-full flex flex-col items-center justify-center bg-DarkPrimary text-Light p-10">
         <div className="flex flex-col lg:flex-row items-center justify-around gap-4 mb-6">
@@ -16,12 +21,25 @@ function Footer() {
                 </div>
                 <div className="mx-4 md:mr-20">
                     <h3 className="pb-2 text-Headline_three">Categories</h3>
-                    <p>Crockery</p>
-                    <p>Forniture</p>
-                    <p>Homeware</p>
-                    <p>Plant pots</p>
-                    <p>Chairs</p>
-                    <p>Crokery</p>
+                    <ul>
+                        <li>
+                            <NavLink to='/all_products'>All Products</NavLink>
+                        </li>
+                        {
+                            dataCategories?.slice(0, 6).map(category => {
+                                const key = category?.slug || category?.id || category
+                                const label = category?.name || category
+                                const categoryUrl = category?.url
+                                return (
+                                    <li key={key}>
+                                        <NavLink to={`/products/${category.slug}`} onClick={() => {
+                                            getProductsCategory(categoryUrl)
+                                        }}>{label}</NavLink>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
                 </div>
                 <div className="mx-4 md:mr-20">
                     <h3 className="pb-2 text-Headline_three">Our company</h3>
