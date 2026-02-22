@@ -29,7 +29,7 @@ function NavBar() {
                 <p className='px-2 font-Roboto text-Headline_one text-Dark'>Avion</p>
                 <img src={logo} alt="Logo" width={50} height={50}/>
             </NavLink>
-            <ul className='hidden md:flex justify-around text-botton font-Roboto'>
+            <ul className='hidden lg:flex justify-around text-botton font-Roboto'>
                 <li className='pr-6 flex items-center'>
                     <NavLink to='/shopping' className='pl-2'>
                         <IoCartOutline size={24} />
@@ -41,17 +41,17 @@ function NavBar() {
             </ul>
             <div onClick={() => {
                 openMenu === 'hidden' ? setOpenMenu('flex') : setOpenMenu('hidden')
-            }} className='md:hidden flex items-center'>
+            }} className='lg:hidden flex items-center'>
                 <IoMdMenu size={50} />
             </div>
         </section>
-        <section className='hidden md:flex justify-center h-[66px]'>
+        <section className='hidden lg:flex justify-center h-[66px]'>
             <ul className='md:flex md:items-center md:text-Dark sm:hidden font-Open_Sans text-Headline_four'>
                 <li>
                     <NavLink to='/all_products'>All Products</NavLink>
                 </li>
                 {
-                    dataCategories?.slice(0, 6).map(category => {
+                    dataCategories?.slice(0, 5).map(category => {
                         const key = category?.slug || category?.id || category
                         const label = category?.name || category
                         const categoryUrl = category?.url
