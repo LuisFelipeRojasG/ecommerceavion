@@ -13,7 +13,7 @@ function Layout() {
   return (
     <div className='flex flex-col'>
       <NavBar />
-      <div id='layout' className='w-full mt-[66px] md:mt-[132px] pt-8 md:pt-10'>
+      <div id='layout' className='w-full mt-[66px] md:mt-[66px]'>
         <Outlet />
       </div>
       <Footer />
