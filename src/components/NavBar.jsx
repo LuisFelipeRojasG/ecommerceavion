@@ -24,7 +24,7 @@ function NavBar() {
             <div className='flex items-center justify-center w-[60px] h-[34px]'>
                 <FaSearch color='black' size={24} />
             </div>
-            <NavLink to='/' className='flex items-center w-44'>
+            <NavLink to='/ecommerceavion/' className='flex items-center w-44'>
                 <img src={logo} alt="Logo" width={50} height={50}/>
                 <p className='px-2 font-Roboto text-Headline_one text-Dark'>Avion</p>
                 <img src={logo} alt="Logo" width={50} height={50}/>
@@ -48,7 +48,7 @@ function NavBar() {
         <section className='hidden lg:flex justify-center h-[66px]'>
             <ul className='md:flex md:items-center md:text-Dark sm:hidden font-Open_Sans text-Headline_four'>
                 <li>
-                    <NavLink to='/all_products'>All Products</NavLink>
+                    <NavLink to='/ecommerceavion/all_products'>All Products</NavLink>
                 </li>
                 {
                     dataCategories?.slice(0, 5).map(category => {
@@ -57,7 +57,7 @@ function NavBar() {
                         const categoryUrl = category?.url
                         return (
                             <li className='p-4 font-Open_Sans text-Headline_four' key={key}>
-                                <NavLink to={`/products/${category.slug}`} onClick={() => {
+                                <NavLink to={`/ecommerceavion/products/${category.slug}`} onClick={() => {
                                     getProductsCategory(categoryUrl)
                                 }}>{label}</NavLink>
                             </li>

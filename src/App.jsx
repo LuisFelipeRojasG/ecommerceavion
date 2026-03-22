@@ -16,11 +16,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/shopping" element={<Shopping />} />
-            <Route path="/all_products" element={<All />} />
-            <Route path="/products/:category" element={<Products />} /> 
-            <Route path="/detail" element={<Detail />} />
+            <Route path="/ecommerceavion/" element={<Home />} />
+            <Route path="/ecommerceavion/shopping" element={<Shopping />} />
+            <Route path="/ecommerceavion/all_products" element={<All />} />
+            <Route path="/ecommerceavion/products/:category" element={<Products />} /> 
+            <Route path="/ecommerceavion/detail" element={<Detail />} />
           </Route>
         </Routes>
       </BrowserRouter>
