@@ -11,7 +11,9 @@ import { allCategories } from '../api/indexApi'
 
 function NavBar() {
 
-    const { openMenu, setOpenMenu, getAllCategories, dataCategories, getProductsCategory } = useAvionContext()
+    const { openMenu, setOpenMenu, getAllCategories, dataCategories, getProductsCategory, getCartItemsCount } = useAvionContext()
+
+    const cartItemsCount = getCartItemsCount()
 
     useEffect(() => {
         getAllCategories(allCategories)
@@ -30,10 +32,15 @@ function NavBar() {
                 <img src={logo} alt="Logo" width={50} height={50}/>
             </NavLink>
             <ul className='hidden lg:flex justify-around text-botton font-Roboto'>
-                <li className='pr-6 flex items-center'>
-                    <NavLink to='/shopping' className='pl-2'>
+                <li className='pr-6 flex items-center relative'>
+                    <NavLink to='/ecommerceavion/shopping' className='pl-2'>
                         <IoCartOutline size={24} />
                     </NavLink>
+                    {cartItemsCount > 0 && (
+                        <span className='absolute -top-2 -right-2 bg-Dark text-Light text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full'>
+                            {cartItemsCount}
+                        </span>
+                    )}
                 </li>
                 <li className='pr-6 flex items-center'>                    
                     <CgProfile size={24} />

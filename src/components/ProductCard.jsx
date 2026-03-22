@@ -8,7 +8,7 @@ function ProductCard( {data} ) {
   let navigate = useNavigate()
   const exportProductDetail = (productData) => {
     setProductDetail(productData)
-    navigate('/detail')
+    navigate('/ecommerceavion/detail')
   }
 
   return (

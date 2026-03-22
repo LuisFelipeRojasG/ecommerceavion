@@ -11,7 +11,10 @@ const AvionProvider = ({ children }) => {
 
   const [productDetail, setProductDetail] = useState([])
 
-  const [cartProducts, setCartProducts] = useState([])
+  const [cartProducts, setCartProducts] = useState(() => {
+    const saved = localStorage.getItem('cartProducts')
+    return saved ? JSON.parse(saved) : []
+  })
 
   const [openMenu, setOpenMenu] = useState('hidden')
 
@@ -116,6 +119,71 @@ const AvionProvider = ({ children }) => {
     }
   }
 
+  const addToCart = (product, quantity = 1) => {
+    const quantityNum = Math.max(1, parseInt(quantity) || 1)
+    const newProduct = {
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      description: product.description,
+      images: product.images,
+      quantity: quantityNum,
+      total: product.price * quantityNum
+    }
+
+    setCartProducts(prev => {
+      const existingIndex = prev.findIndex(p => p.id === product.id)
+      let updatedCart
+
+      if (existingIndex >= 0) {
+        updatedCart = prev.map((p, index) => 
+          index === existingIndex 
+            ? { ...p, quantity: p.quantity + quantityNum, total: p.price * (p.quantity + quantityNum) }
+            : p
+        )
+      } else {
+        updatedCart = [...prev, newProduct]
+      }
+
+      localStorage.setItem('cartProducts', JSON.stringify(updatedCart))
+      return updatedCart
+    })
+  }
+
+  const updateCartItemQuantity = (productId, newQuantity) => {
+    const quantityNum = Math.max(1, parseInt(newQuantity) || 1)
+    setCartProducts(prev => {
+      const updatedCart = prev.map(p => 
+        p.id === productId 
+          ? { ...p, quantity: quantityNum, total: p.price * quantityNum }
+          : p
+      )
+      localStorage.setItem('cartProducts', JSON.stringify(updatedCart))
+      return updatedCart
+    })
+  }
+
+  const removeFromCart = (productId) => {
+    setCartProducts(prev => {
+      const updatedCart = prev.filter(p => p.id !== productId)
+      localStorage.setItem('cartProducts', JSON.stringify(updatedCart))
+      return updatedCart
+    })
+  }
+
+  const clearCart = () => {
+    setCartProducts([])
+    localStorage.removeItem('cartProducts')
+  }
+
+  const getCartTotal = () => {
+    return cartProducts.reduce((sum, product) => sum + (product.total || 0), 0)
+  }
+
+  const getCartItemsCount = () => {
+    return cartProducts.reduce((sum, product) => sum + (product.quantity || 1), 0)
+  }
+
   return (
     <AvionContext.Provider
       value={{
@@ -125,6 +193,12 @@ const AvionProvider = ({ children }) => {
         setProductDetail,
         cartProducts,
         setCartProducts,
+        addToCart,
+        updateCartItemQuantity,
+        removeFromCart,
+        clearCart,
+        getCartTotal,
+        getCartItemsCount,
         getAllCategories,
         openMenu,
         setOpenMenu,

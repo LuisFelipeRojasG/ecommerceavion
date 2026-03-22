@@ -4,22 +4,18 @@ import { useState } from 'react'
 
 function ProductDetail() {
     
-    const { setIsProductDetailOpen, productDetail, setCartProducts, cartProducts } = useAvionContext()
+    const { setIsProductDetailOpen, productDetail, addToCart } = useAvionContext()
 
-    const [quantity, setQuantity] = useState('')
+    const [quantity, setQuantity] = useState(1)
 
     const onChangeQuantity = (e) => {
-        setQuantity(e.target.value)
+        const value = parseInt(e.target.value)
+        setQuantity(value > 0 ? value : 1)
     }
 
-    let productChoice = productDetail
-
-    productChoice.quantity = quantity
-    productChoice.total = productDetail.price * quantity
-
-    function addProductToCart(e) {
+    const handleAddToCart = (e) => {
         e.preventDefault()
-        setCartProducts([...cartProducts, productChoice])
+        addToCart(productDetail, quantity)
         setIsProductDetailOpen(false)        
     }
 
@@ -41,9 +37,16 @@ function ProductDetail() {
                 <form className='row-start-5 flex justify-between items-center gap-2'>
                     <div className='flex justify-between items-center gap-2'>
                         <h3 className='pr-8 text-Body_small font-Roboto'>Quantity</h3>
-                        <input id='quantity' type='number' onChange={onChangeQuantity} placeholder='1' className='w-14 h-12 border-8 text-center' />
+                        <input 
+                            id='quantity' 
+                            type='number' 
+                            min='1'
+                            value={quantity}
+                            onChange={onChangeQuantity} 
+                            className='w-14 h-12 border-8 text-center'
+                        />
                     </div>
-                    <button onClick={addProductToCart} className='w-36 h-16 bg-Primary text-Light font-Roboto text-Headline_five'> 
+                    <button onClick={handleAddToCart} className='w-36 h-16 bg-Primary text-Light font-Roboto text-Headline_five'> 
                         Add to cart
                     </button>
                 </form>
