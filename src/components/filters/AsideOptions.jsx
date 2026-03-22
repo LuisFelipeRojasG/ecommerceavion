@@ -2,7 +2,8 @@
 import useAvionContext from '../../context/UseContext'
 import FilterButton from '../../components/filters/FilterButton'
 import ShortingButton from '../../components/filters/ShortingButton'
-import CategoryButton from './CategoryButton'
+import CategoryFilterMobile from './CategoryFilterMobile'
+import ClearButton from './ClearButton'
 
 function AsideOptions({
   showCategoryFilter = true,
@@ -34,10 +35,11 @@ function AsideOptions({
 
   return (
     <aside>
-        <div className='grow-0 xl:hidden w-screen h-20 flex justify-center gap-4 mt-10'>
-            <FilterButton />
-            <ShortingButton />
-            <CategoryButton />
+        <div className='grow-0 xl:hidden w-screen h-auto min-h-20 flex flex-wrap justify-center gap-4 mt-10 pb-4'>
+            {showPriceFilter && <FilterButton />}
+            {showSortFilter && <ShortingButton />}
+            {showCategoryFilter && <CategoryFilterMobile />}
+            <ClearButton />
         </div>
         <div className='hidden xl:flex flex-col gap-4 w-72 h-auto'>
           <div className='flex justify-end pr-6'>

@@ -11,7 +11,7 @@ function MobileMenu() {
     }
     } className="lg:hidden bg-BorderGrey">
         <p className="p-4 font-Open_Sans text-Headline_four">
-            <NavLink to='/all_products'>All Products</NavLink>
+            <NavLink to='/ecommerceavion/all_products'>All Products</NavLink>
         </p>
         {
             dataCategories?.slice(0, 5).map(category => {
@@ -20,7 +20,7 @@ function MobileMenu() {
                     const categoryUrl = category?.url
                     return (
                         <li className='p-4 font-Open_Sans text-Headline_four' key={key}>
-                            <NavLink to={`/products/${category.slug}`} onClick={() => {
+                            <NavLink to={`/ecommerceavion/products/${category.slug}`} onClick={() => {
                                 getProductsCategory(categoryUrl)
                             }}>{label}</NavLink>
                         </li>
@@ -28,7 +28,7 @@ function MobileMenu() {
             })
         }
         <p className="p-4 font-Open_Sans text-Headline_four">
-            <NavLink to='/shopping'>Cart</NavLink>
+            <NavLink to='/ecommerceavion/shopping'>Cart</NavLink>
         </p>
     </div>
   )
