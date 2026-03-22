@@ -11,6 +11,10 @@ const AvionProvider = ({ children }) => {
 
   const [productDetail, setProductDetail] = useState([])
 
+  /**
+   * Estado del carrito de compras con persistencia en localStorage
+   * Al iniciar, verifica si hay datos guardados previamente
+   */
   const [cartProducts, setCartProducts] = useState(() => {
     const saved = localStorage.getItem('cartProducts')
     return saved ? JSON.parse(saved) : []
@@ -119,6 +123,17 @@ const AvionProvider = ({ children }) => {
     }
   }
 
+  /**
+   * Agrega un producto al carrito de compras
+   * @param {Object} product - Producto a agregar (del API)
+   * @param {number} quantity - Cantidad a agregar (default: 1)
+   * 
+   * Comportamiento:
+   * - Valida que la cantidad sea mínimo 1
+   * - Si el producto ya existe, incrementa la cantidad
+   * - Si es nuevo, lo agrega al carrito
+   * - Sincroniza con localStorage para persistencia
+   */
   const addToCart = (product, quantity = 1) => {
     const quantityNum = Math.max(1, parseInt(quantity) || 1)
     const newProduct = {
@@ -150,6 +165,16 @@ const AvionProvider = ({ children }) => {
     })
   }
 
+  /**
+   * Actualiza la cantidad de un producto específico en el carrito
+   * @param {string|number} productId - ID del producto a actualizar
+   * @param {number} newQuantity - Nueva cantidad (mínimo 1)
+   * 
+   * Comportamiento:
+   * - Valida que la cantidad sea mínimo 1
+   * - Recalcula el total (precio * cantidad)
+   * - Sincroniza con localStorage
+   */
   const updateCartItemQuantity = (productId, newQuantity) => {
     const quantityNum = Math.max(1, parseInt(newQuantity) || 1)
     setCartProducts(prev => {
@@ -163,6 +188,14 @@ const AvionProvider = ({ children }) => {
     })
   }
 
+  /**
+   * Elimina un producto del carrito
+   * @param {string|number} productId - ID del producto a eliminar
+   * 
+   * Comportamiento:
+   * - Filtra el producto del array
+   * - Sincroniza con localStorage
+   */
   const removeFromCart = (productId) => {
     setCartProducts(prev => {
       const updatedCart = prev.filter(p => p.id !== productId)
@@ -171,15 +204,30 @@ const AvionProvider = ({ children }) => {
     })
   }
 
+  /**
+   * Limpia completamente el carrito
+   * 
+   * Comportamiento:
+   * - Vacía el array de productos
+   * - Elimina los datos de localStorage
+   */
   const clearCart = () => {
     setCartProducts([])
     localStorage.removeItem('cartProducts')
   }
 
+  /**
+   * Calcula el total del carrito
+   * @returns {number} Suma de todos los totales de productos
+   */
   const getCartTotal = () => {
     return cartProducts.reduce((sum, product) => sum + (product.total || 0), 0)
   }
 
+  /**
+   * Cuenta el total de items en el carrito
+   * @returns {number} Suma de todas las cantidades
+   */
   const getCartItemsCount = () => {
     return cartProducts.reduce((sum, product) => sum + (product.quantity || 1), 0)
   }

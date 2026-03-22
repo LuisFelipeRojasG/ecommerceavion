@@ -91,6 +91,24 @@ const useAvionContext = () => {
 - Log errors with `console.log(error)` (no external logger)
 - Consider adding user-facing error states in production
 
+### Code Documentation
+- **Funciones complejas:** Agregar comentarios JSDoc explicando propósito, parámetros y comportamiento
+- **Lógica de negocio:** Documentar decisiones importantes dentro del código
+- **Funciones del carrito:** Mantener documentación actualizada de `addToCart`, `updateCartItemQuantity`, `removeFromCart`, `clearCart`, `getCartTotal`, `getCartItemsCount`
+
+### Shopping Cart Features
+El carrito de compras implementa las siguientes funcionalidades:
+
+| Función | Descripción |
+|---------|-------------|
+| `addToCart(product, quantity)` | Agrega producto, valida cantidad (min 1), maneja duplicados incrementando cantidad, persiste en localStorage |
+| `updateCartItemQuantity(productId, quantity)` | Actualiza cantidad de producto específico, recalcula total |
+| `removeFromCart(productId)` | Elimina producto del carrito |
+| `clearCart()` | Vacía el carrito completamente |
+| `getCartTotal()` | Retorna suma de todos los totales |
+| `getCartItemsCount()` | Retorna suma de cantidades |
+| Persistencia | Los productos se guardan en `localStorage` bajo la clave `cartProducts` |
+
 ### Styling with Tailwind CSS
 
 **Custom Colors (defined in tailwind.config.js):**
