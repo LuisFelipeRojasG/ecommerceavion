@@ -22,6 +22,12 @@ const AvionProvider = ({ children }) => {
 
   const [openMenu, setOpenMenu] = useState('hidden')
 
+  /**
+   * Estado global de carga para todas las operaciones que obtienen datos de la API
+   * Se utiliza para mostrar skeletons mientras se cargan los productos
+   */
+  const [isLoading, setIsLoading] = useState(false)
+
   // Estados para filtros
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([])
 
@@ -92,34 +98,61 @@ const AvionProvider = ({ children }) => {
 
   const getAllCategories = async (url) => {
     try {
+      setIsLoading(true)
       const response = await fetch(url)
       const data = await response.json()
       return setDataCategories(data)
 
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
+  /**
+   * Obtiene todos los productos desde la API de DummyJSON
+   * @param {string} url - Endpoint de la API
+   * 
+   * Comportamiento:
+   * - Activa el estado isLoading antes de la solicitud
+   * - Almacena los productos en dataProducts
+   * - Desactiva isLoading al completar (éxito o error)
+   */
   const getAllProducts = async (url) => {
     try {
+      setIsLoading(true)
       const response = await fetch(url)
       const data = await response.json()
       return setDataProducts(data.products)
 
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
+  /**
+   * Obtiene productos de una categoría específica desde la API
+   * @param {string} url - Endpoint de la API para la categoría
+   * 
+   * Comportamiento:
+   * - Activa el estado isLoading antes de la solicitud
+   * - Almacena los productos en dataProductsCategory
+   * - Desactiva isLoading al completar (éxito o error)
+   */
   const getProductsCategory = async (url) => {
     try {
+      setIsLoading(true)
       const response = await fetch(url)
       const data = await response.json()
       return setDataProductsCategory(data.products)
 
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -264,7 +297,9 @@ const AvionProvider = ({ children }) => {
         setSortOrder,
         clearAllFilters,
         filterAndSortProducts,
-        priceRanges
+        priceRanges,
+        isLoading,
+        setIsLoading
       }}
     >
         {children}

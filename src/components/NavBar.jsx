@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router'
+import { useState } from 'react'
+import { NavLink, useNavigate } from 'react-router'
 import { FaSearch } from 'react-icons/fa'
 import { CgProfile } from 'react-icons/cg'
 import { IoCartOutline } from 'react-icons/io5'
@@ -12,6 +13,10 @@ import { allCategories } from '../api/indexApi'
 function NavBar() {
 
     const { openMenu, setOpenMenu, getAllCategories, dataCategories, getProductsCategory, getCartItemsCount } = useAvionContext()
+    const navigate = useNavigate()
+    
+    const [showSearch, setShowSearch] = useState(false)
+    const [searchQuery, setSearchQuery] = useState('')
 
     const cartItemsCount = getCartItemsCount()
 
@@ -19,19 +24,45 @@ function NavBar() {
         getAllCategories(allCategories)
     }, [])
 
+    const handleSearch = (e) => {
+        e.preventDefault()
+        if (searchQuery.trim()) {
+            navigate(`/ecommerceavion/search?q=${encodeURIComponent(searchQuery.trim())}`)
+            setShowSearch(false)
+            setSearchQuery('')
+        }
+    }
 
-  return (
-    <nav className='fixed top-0 w-full flex flex-col bg-BorderGrey'>
-        <section className='flex justify-between h-[66px] p-4'>
-            <div className='flex items-center justify-center w-[60px] h-[34px]'>
-                <FaSearch color='black' size={24} />
+    return (
+    <nav className='fixed top-0 w-full flex flex-col bg-BorderGrey z-50'>
+        <section className='flex justify-between h-[66px] p-4 items-center'>
+            <div className='flex items-center w-[60px]'>
+                {showSearch ? (
+                    <form onSubmit={handleSearch} className='flex items-center w-full'>
+                        <input
+                            type='text'
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            placeholder='Search...'
+                            className='w-full h-8 px-2 text-sm border border-gray-300 rounded focus:outline-none focus:border-Primary'
+                            autoFocus
+                        />
+                        <button type='submit' className='ml-1'>
+                            <FaSearch size={18} />
+                        </button>
+                    </form>
+                ) : (
+                    <button onClick={() => setShowSearch(true)} className='flex items-center justify-center w-full h-full'>
+                        <FaSearch color='black' size={24} />
+                    </button>
+                )}
             </div>
             <NavLink to='/ecommerceavion/' className='flex items-center w-44'>
                 <img src={logo} alt="Logo" width={50} height={50}/>
                 <p className='px-2 font-Roboto text-Headline_one text-Dark'>Avion</p>
                 <img src={logo} alt="Logo" width={50} height={50}/>
             </NavLink>
-            <ul className='hidden lg:flex justify-around text-botton font-Roboto'>
+            <ul className='flex justify-around text-botton font-Roboto'>
                 <li className='pr-6 flex items-center relative'>
                     <NavLink to='/ecommerceavion/shopping' className='pl-2'>
                         <IoCartOutline size={24} />

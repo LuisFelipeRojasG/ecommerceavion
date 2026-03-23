@@ -1,13 +1,14 @@
 
 import ProductCard from '../../components/ProductCard'
+import ProductCardSkeleton from '../../components/ProductCardSkeleton'
 import useAvionContext from '../../context/UseContext'
 import allProducts from '../../assets/pageHeaders.webp'
 import AsideOptions from '../../components/filters/AsideOptions'
 
 function All() {
 
-  // Obtiene productos y función de filtrado del contexto
-  const { dataProducts, filterAndSortProducts } = useAvionContext()
+  // Obtiene productos, función de filtrado y estado de carga del contexto
+  const { dataProducts, filterAndSortProducts, isLoading } = useAvionContext()
 
   // Aplica filtros y ordenamiento a los productos
   const displayedProducts = filterAndSortProducts(dataProducts)
@@ -24,14 +25,19 @@ function All() {
           showSortFilter={true}
         />
         <section className='grow grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8 justify-items-center p-10'>
-          {
+          {isLoading ? (
+            // Mostrar skeletons mientras carga - 8 skeletons para mantener consistencia visual
+            Array.from({ length: 8 }).map((_, index) => (
+              <ProductCardSkeleton key={index} />
+            ))
+          ) : (
             displayedProducts?.map(product => (
               <ProductCard
                 key={product.id}
                 data={product}
               />
             ))
-          }
+          )}
         </section>
       </div>
     </div>

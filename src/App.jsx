@@ -7,6 +7,7 @@ import Shopping from './pages/Shopping.jsx'
 import Products from './pages/categories/Products.jsx'
 import All from './pages/categories/All.jsx'
 import Detail from './pages/Detail.jsx'
+import SearchResults from './pages/SearchResults.jsx'
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Route path="/ecommerceavion/all_products" element={<All />} />
             <Route path="/ecommerceavion/products/:category" element={<Products />} /> 
             <Route path="/ecommerceavion/detail" element={<Detail />} />
+            <Route path="/ecommerceavion/search" element={<SearchResults />} />
           </Route>
         </Routes>
       </BrowserRouter>
