@@ -18,6 +18,8 @@ function ShortingButton() {
                 onClick={() => openDropdownShorting === 'hidden' ? setOpenDropdownShorting('flex') : setOpenDropdownShorting('hidden')} 
                 className="w-56 h-16 p-2 flex items-center justify-center bg-BorderGrey text-Dark text-Headline_three" 
                 type="button"
+                aria-label='Sort products'
+                aria-expanded={openDropdownShorting === 'flex'}
             >
                 Shorting
                 <FaCaretDown className="ml-2" />
@@ -35,6 +37,18 @@ function ShortingButton() {
                         onClick={() => handleSort('desc')}
                     >
                         Descending (Z-A)
+                    </li>
+                    <li 
+                        className={`p-4 font-Open_Sans text-Headline_four cursor-pointer ${sortOrder === 'price-asc' ? 'bg-Dark text-Light' : ''}`}
+                        onClick={() => handleSort('price-asc')}
+                    >
+                        Price: Low to High
+                    </li>
+                    <li 
+                        className={`p-4 font-Open_Sans text-Headline_four cursor-pointer ${sortOrder === 'price-desc' ? 'bg-Dark text-Light' : ''}`}
+                        onClick={() => handleSort('price-desc')}
+                    >
+                        Price: High to Low
                     </li>
                 </ul>
             </div>

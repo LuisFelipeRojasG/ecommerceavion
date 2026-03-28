@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useState, useCallback, useMemo } from 'react'
 
 const AvionContext = createContext()
 
@@ -78,33 +78,33 @@ const AvionProvider = ({ children }) => {
     { label: "> 100", min: 100, max: Infinity }
   ]
 
-  // Toggle para seleccionar/deseleccionar rangos de precio (acumulativo)
-  const togglePriceRange = (range) => {
+  // Toggle para seleccionar/deseleccionar rangos de precio (acumulativo) - memoizado
+  const togglePriceRange = useCallback((range) => {
     setSelectedPriceRanges(prev =>
       prev.find(r => r.label === range.label)
         ? prev.filter(r => r.label !== range.label)
         : [...prev, range]
     )
-  }
+  }, [])
 
-  // Toggle para seleccionar/deseleccionar categorías (acumulativo)
-  const toggleCategory = (slug) => {
+  // Toggle para seleccionar/deseleccionar categorías (acumulativo) - memoizado
+  const toggleCategory = useCallback((slug) => {
     setSelectedCategories(prev =>
       prev.includes(slug)
         ? prev.filter(c => c !== slug)
         : [...prev, slug]
     )
-  }
+  }, [])
 
-  // Limpiar todos los filtros activos
-  const clearAllFilters = () => {
+  // Limpiar todos los filtros activos - memoizado
+  const clearAllFilters = useCallback(() => {
     setSelectedPriceRanges([])
     setSelectedCategories([])
     setSortOrder(null)
-  }
+  }, [])
 
-  // Filtrar y ordenar productos según los filtros seleccionados
-  const filterAndSortProducts = (products) => {
+  // Filtrar y ordenar productos según los filtros seleccionados - memoizado
+  const filterAndSortProducts = useCallback((products) => {
     let result = [...products]
 
     if (selectedPriceRanges.length > 0) {
@@ -125,10 +125,14 @@ const AvionProvider = ({ children }) => {
       result.sort((a, b) => a.title.localeCompare(b.title))
     } else if (sortOrder === 'desc') {
       result.sort((a, b) => b.title.localeCompare(a.title))
+    } else if (sortOrder === 'price-asc') {
+      result.sort((a, b) => a.price - b.price)
+    } else if (sortOrder === 'price-desc') {
+      result.sort((a, b) => b.price - a.price)
     }
 
     return result
-  }
+  }, [selectedPriceRanges, selectedCategories, sortOrder])
 
   const getAllCategories = async (url) => {
     try {
@@ -298,20 +302,20 @@ const AvionProvider = ({ children }) => {
   }
 
   /**
-   * Calcula el total del carrito
+   * Calcula el total del carrito usando useMemo
    * @returns {number} Suma de todos los totales de productos
    */
-  const getCartTotal = () => {
-    return cartProducts.reduce((sum, product) => sum + (product.total || 0), 0)
-  }
+  const getCartTotal = useMemo(() => {
+    return () => cartProducts.reduce((sum, product) => sum + (product.total || 0), 0)
+  }, [cartProducts])
 
   /**
-   * Cuenta el total de items en el carrito
+   * Cuenta el total de items en el carrito usando useMemo
    * @returns {number} Suma de todas las cantidades
    */
-  const getCartItemsCount = () => {
-    return cartProducts.reduce((sum, product) => sum + (product.quantity || 1), 0)
-  }
+  const getCartItemsCount = useMemo(() => {
+    return () => cartProducts.reduce((sum, product) => sum + (product.quantity || 1), 0)
+  }, [cartProducts])
 
   return (
     <AvionContext.Provider

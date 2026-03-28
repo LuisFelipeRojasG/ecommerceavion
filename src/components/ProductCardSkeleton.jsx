@@ -1,9 +1,11 @@
+import { memo } from 'react'
+
 /**
- * Componente de esqueleto de carga para ProductCard
+ * Componente de esqueleto de carga para ProductCard memoizado
  * Se muestra mientras los productos se cargan desde la API
  * Mantiene la misma estructura visual que ProductCard para evitar layout shift
  */
-function ProductCardSkeleton() {
+const ProductCardSkeleton = memo(function ProductCardSkeleton() {
   return (
     <article className='flex flex-col gap-4 w-60 p-4 border border-Gray'>
       {/* Imagen skeleton - misma dimensión que ProductCard */}
@@ -16,6 +18,9 @@ function ProductCardSkeleton() {
         {/* Título skeleton */}
         <div className='h-6 bg-gray-200 animate-pulse rounded w-48 mb-2' />
         
+        {/* Rating skeleton */}
+        <div className='h-4 bg-gray-200 animate-pulse rounded w-12' />
+        
         {/* Precio y botón skeleton */}
         <div className='flex justify-between items-center'>
           <div className='h-6 bg-gray-200 animate-pulse rounded w-16' />
@@ -24,6 +29,6 @@ function ProductCardSkeleton() {
       </div>
     </article>
   )
-}
+})
 
 export default ProductCardSkeleton
