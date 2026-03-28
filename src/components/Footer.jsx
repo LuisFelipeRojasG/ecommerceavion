@@ -65,10 +65,10 @@ function Footer() {
                 <p>Copyright 2025 Avion LTD</p>
             </div>
             <div className="hidden md:flex items-center justify-center gap-4">
-                <FaLinkedin size={30}/>
-                <FaFacebookSquare size={30}/>
-                <FaInstagram size={30}/>
-                <FaSquareXTwitter size={30}/>
+                <FaLinkedin size={30} aria-label='LinkedIn'/>
+                <FaFacebookSquare size={30} aria-label='Facebook'/>
+                <FaInstagram size={30} aria-label='Instagram'/>
+                <FaSquareXTwitter size={30} aria-label='X (Twitter)'/>
             </div>
         </div>
     </section>

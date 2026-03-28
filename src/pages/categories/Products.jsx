@@ -1,19 +1,27 @@
 
+import { useParams } from 'react-router'
 import useAvionContext from '../../context/UseContext'
 import ProductCard from '../../components/ProductCard'
 import ProductCardSkeleton from '../../components/ProductCardSkeleton'
+import ErrorMessage from '../../components/ErrorMessage'
 import AsideOptions from '../../components/filters/AsideOptions'
 
 function Products() {
 
-  // Obtiene productos de categoría, función de filtrado y estado de carga del contexto
-  const { dataProductsCategory, filterAndSortProducts, isLoading } = useAvionContext()
+  const { category } = useParams()
+  
+  // Obtiene productos de categoría, función de filtrado, estado de carga y error del contexto
+  const { dataProductsCategory, filterAndSortProducts, isLoading, error, getProductsCategory } = useAvionContext()
+
+  // URL de la API para reintentar
+  const categoryUrl = `https://dummyjson.com/products/category/${category}`
 
   // Aplica filtros y ordenamiento a los productos de la categoría
   const displayedProducts = filterAndSortProducts(dataProductsCategory)
 
   return (
     <div className='grid grid-cols-1'>
+      {error && <ErrorMessage message={error} onRetry={() => getProductsCategory(categoryUrl)} />}
       <div className='flex flex-col xl:flex-row gap-6 mt-20 justify-center'>
         <AsideOptions
           showCategoryFilter={false}

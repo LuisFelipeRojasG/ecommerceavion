@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router'
 import { FaSearch } from 'react-icons/fa'
 import { CgProfile } from 'react-icons/cg'
@@ -7,18 +7,22 @@ import { IoMdMenu } from 'react-icons/io'
 import useAvionContext from '../context/UseContext'
 import MobileMenu from './MobileMenu'
 import logo from '../assets/group98.png'
-import { useEffect } from 'react'
 import { allCategories } from '../api/indexApi'
 
 function NavBar() {
 
-    const { openMenu, setOpenMenu, getAllCategories, dataCategories, getProductsCategory, getCartItemsCount } = useAvionContext()
+    const { openMenu, setOpenMenu, getAllCategories, dataCategories, getProductsCategory, getCartItemsCount, cartProducts } = useAvionContext()
     const navigate = useNavigate()
     
     const [showSearch, setShowSearch] = useState(false)
     const [searchQuery, setSearchQuery] = useState('')
 
-    const cartItemsCount = getCartItemsCount()
+    /**
+     * useMemo para evitar re-renders innecesarios
+     * getCartItemsCount() se ejecuta en cada render sin esto
+     * Solo se recalcula cuando cambia cartProducts
+     */
+    const cartItemsCount = useMemo(() => getCartItemsCount(), [cartProducts])
 
     useEffect(() => {
         getAllCategories(allCategories)
@@ -47,12 +51,12 @@ function NavBar() {
                             className='w-full h-8 px-2 text-sm border border-gray-300 rounded focus:outline-none focus:border-Primary'
                             autoFocus
                         />
-                        <button type='submit' className='ml-1'>
+                        <button type='submit' className='ml-1' aria-label='Search products'>
                             <FaSearch size={18} />
                         </button>
                     </form>
                 ) : (
-                    <button onClick={() => setShowSearch(true)} className='flex items-center justify-center w-full h-full'>
+                    <button onClick={() => setShowSearch(true)} className='flex items-center justify-center w-full h-full' aria-label='Open search'>
                         <FaSearch color='black' size={24} />
                     </button>
                 )}
@@ -64,7 +68,7 @@ function NavBar() {
             </NavLink>
             <ul className='flex justify-around text-botton font-Roboto'>
                 <li className='pr-6 flex items-center relative'>
-                    <NavLink to='/ecommerceavion/shopping' className='pl-2'>
+                    <NavLink to='/ecommerceavion/shopping' className='pl-2' aria-label='Shopping cart'>
                         <IoCartOutline size={24} />
                     </NavLink>
                     {cartItemsCount > 0 && (
@@ -73,13 +77,13 @@ function NavBar() {
                         </span>
                     )}
                 </li>
-                <li className='pr-6 flex items-center'>                    
+                <li className='pr-6 flex items-center' aria-label='User profile'>                    
                     <CgProfile size={24} />
                 </li>
             </ul>
             <div onClick={() => {
                 openMenu === 'hidden' ? setOpenMenu('flex') : setOpenMenu('hidden')
-            }} className='lg:hidden flex items-center'>
+            }} className='lg:hidden flex items-center' role='button' aria-label='Open menu' aria-expanded={openMenu === 'flex'}>
                 <IoMdMenu size={50} />
             </div>
         </section>

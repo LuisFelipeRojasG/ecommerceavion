@@ -4,6 +4,45 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Animación para el Toast flotante */
+@keyframes slide-up {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.animate-slide-up {
+    animation: slide-up 0.3s ease-out;
+}
+
+/* Estados de focus visibles para navegación por teclado */
+*:focus-visible {
+    outline: 2px solid #4E4D93;
+    outline-offset: 2px;
+}
+
+/* Mejorar focus en botones */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid #4E4D93;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Transiciones suaves para interacciones */
+button,
+a,
+input,
+select {
+    transition: all 0.2s ease-in-out;
+}
 
 
 * {

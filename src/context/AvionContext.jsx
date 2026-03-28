@@ -12,6 +12,12 @@ const AvionProvider = ({ children }) => {
   const [productDetail, setProductDetail] = useState([])
 
   /**
+   * Estado para controlar la visibilidad del modal de detalle de producto
+   * Se usa en Layout.jsx para renderizar el modal via portal
+   */
+  const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
+
+  /**
    * Estado del carrito de compras con persistencia en localStorage
    * Al iniciar, verifica si hay datos guardados previamente
    */
@@ -27,6 +33,34 @@ const AvionProvider = ({ children }) => {
    * Se utiliza para mostrar skeletons mientras se cargan los productos
    */
   const [isLoading, setIsLoading] = useState(false)
+
+  /**
+   * Estado global de error para manejar fallos de la API
+   * Se utiliza en todas las páginas que obtienen datos
+   */
+  const [error, setError] = useState(null)
+
+  /**
+   * Estado para el toast de notificación flotante
+   * Se muestra cuando se añade un producto al carrito
+   */
+  const [toast, setToast] = useState(null)
+
+  /**
+   * Muestra un toast de notificación
+   * @param {string} message - Mensaje a mostrar
+   * @param {string} type - Tipo de toast ('success' | 'error' | 'info')
+   */
+  const showToast = (message, type = 'success') => {
+    setToast({ message, type })
+  }
+
+  /**
+   * Oculta el toast actual
+   */
+  const hideToast = () => {
+    setToast(null)
+  }
 
   // Estados para filtros
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([])
@@ -99,12 +133,14 @@ const AvionProvider = ({ children }) => {
   const getAllCategories = async (url) => {
     try {
       setIsLoading(true)
+      setError(null)
       const response = await fetch(url)
       const data = await response.json()
       return setDataCategories(data)
 
     } catch (error) {
       console.log(error)
+      setError('Failed to load categories. Please try again.')
     } finally {
       setIsLoading(false)
     }
@@ -122,12 +158,14 @@ const AvionProvider = ({ children }) => {
   const getAllProducts = async (url) => {
     try {
       setIsLoading(true)
+      setError(null)
       const response = await fetch(url)
       const data = await response.json()
       return setDataProducts(data.products)
 
     } catch (error) {
       console.log(error)
+      setError('Failed to load products. Please try again.')
     } finally {
       setIsLoading(false)
     }
@@ -145,12 +183,14 @@ const AvionProvider = ({ children }) => {
   const getProductsCategory = async (url) => {
     try {
       setIsLoading(true)
+      setError(null)
       const response = await fetch(url)
       const data = await response.json()
       return setDataProductsCategory(data.products)
 
     } catch (error) {
       console.log(error)
+      setError('Failed to load category products. Please try again.')
     } finally {
       setIsLoading(false)
     }
@@ -166,6 +206,7 @@ const AvionProvider = ({ children }) => {
    * - Si el producto ya existe, incrementa la cantidad
    * - Si es nuevo, lo agrega al carrito
    * - Sincroniza con localStorage para persistencia
+   * - Muestra un toast de confirmación
    */
   const addToCart = (product, quantity = 1) => {
     const quantityNum = Math.max(1, parseInt(quantity) || 1)
@@ -182,6 +223,7 @@ const AvionProvider = ({ children }) => {
     setCartProducts(prev => {
       const existingIndex = prev.findIndex(p => p.id === product.id)
       let updatedCart
+      let message
 
       if (existingIndex >= 0) {
         updatedCart = prev.map((p, index) => 
@@ -189,11 +231,17 @@ const AvionProvider = ({ children }) => {
             ? { ...p, quantity: p.quantity + quantityNum, total: p.price * (p.quantity + quantityNum) }
             : p
         )
+        message = `${product.title} quantity updated!`
       } else {
         updatedCart = [...prev, newProduct]
+        message = `${product.title} added to cart!`
       }
 
       localStorage.setItem('cartProducts', JSON.stringify(updatedCart))
+      
+      // Mostrar toast de confirmación
+      showToast(message, 'success')
+      
       return updatedCart
     })
   }
@@ -272,6 +320,8 @@ const AvionProvider = ({ children }) => {
         dataCategories,
         productDetail,
         setProductDetail,
+        isProductDetailOpen,
+        setIsProductDetailOpen,
         cartProducts,
         setCartProducts,
         addToCart,
@@ -299,7 +349,12 @@ const AvionProvider = ({ children }) => {
         filterAndSortProducts,
         priceRanges,
         isLoading,
-        setIsLoading
+        setIsLoading,
+        error,
+        setError,
+        toast,
+        showToast,
+        hideToast
       }}
     >
         {children}

@@ -35,7 +35,7 @@ function Listings() {
         </div>
         <button 
           className='w-full py-4 bg-BorderGrey text-Headline_two text-Dark'
-          onClick={() => navigate('/all')}
+          onClick={() => navigate('/ecommerceavion/all_products')}
         >
           View all products collection
         </button>

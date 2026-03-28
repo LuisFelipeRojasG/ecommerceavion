@@ -1,14 +1,16 @@
 
 import ProductCard from '../../components/ProductCard'
 import ProductCardSkeleton from '../../components/ProductCardSkeleton'
+import ErrorMessage from '../../components/ErrorMessage'
 import useAvionContext from '../../context/UseContext'
 import allProducts from '../../assets/pageHeaders.webp'
 import AsideOptions from '../../components/filters/AsideOptions'
+import { allProductos } from '../../api/indexApi'
 
 function All() {
 
-  // Obtiene productos, función de filtrado y estado de carga del contexto
-  const { dataProducts, filterAndSortProducts, isLoading } = useAvionContext()
+  // Obtiene productos, función de filtrado, estado de carga y error del contexto
+  const { dataProducts, filterAndSortProducts, isLoading, error, getAllProducts } = useAvionContext()
 
   // Aplica filtros y ordenamiento a los productos
   const displayedProducts = filterAndSortProducts(dataProducts)
@@ -18,6 +20,7 @@ function All() {
       <div className='w-full'>
         <img src={allProducts} alt="All Products Header" className='w-full h-auto' />
       </div>
+      {error && <ErrorMessage message={error} onRetry={() => getAllProducts(allProductos)} />}
       <div className='flex flex-col xl:flex-row gap-6 justify-center'>
         <AsideOptions
           showCategoryFilter={true}
