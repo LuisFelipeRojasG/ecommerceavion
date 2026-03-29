@@ -10,7 +10,7 @@ const ProductCardSkeleton = memo(function ProductCardSkeleton() {
     <article className='flex flex-col gap-4 w-60 p-4 border border-Gray'>
       {/* Imagen skeleton - misma dimensión que ProductCard */}
       <figure className='mb-4'>
-        <div className='w-60 h-[200px] bg-gray-200 animate-pulse rounded' />
+        <div className='w-60 h-product-image bg-gray-200 animate-pulse rounded' />
       </figure>
       
       {/* Contenido skeleton */}

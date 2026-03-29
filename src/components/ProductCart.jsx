@@ -38,7 +38,7 @@ function ProductCart( ) {
         return (
             <section className='flex flex-col gap-6 px-6 pb-32 items-center justify-center min-h-[50vh]'>
                 <div className='flex flex-col items-center gap-6 text-center'>
-                    <FaCheckCircle size={64} color='#22c55e' />
+                    <FaCheckCircle size={64} className='text-green-500' />
                     <h1 className='text-Headline_one font-Roboto text-Dark'>
                         ¡Gracias por tu compra!
                     </h1>

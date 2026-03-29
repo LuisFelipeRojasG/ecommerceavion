@@ -7,24 +7,15 @@ export default {
   ],
   theme: {
     extend: {
-      backgroundColor: (theme) => ({
-        ...theme("colors"),
-        DarkPrimary: "#2A254B",
-        Primary: "#4E4D93",
-        LightGrey: "#F9F9F9",
-        BorderGrey: "#EBE8F4",
-        White: "#FFFFFF",
-        BorderDark: "#CAC6DA"
-      }),
-      textColor: {
-        Dark: "#2A254B",
-        Primary: "#4E4D93",
-        Light: "#FFFFFF"
-      },
       colors: {
         Dark: "#2A254B",
         Primary: "#4E4D93",
-        Light: "#FFFFFF"
+        Light: "#FFFFFF",
+        DarkPrimary: "#2A254B",
+        LightGrey: "#F9F9F9",
+        BorderGrey: "#EBE8F4",
+        BorderDark: "#CAC6DA",
+        Gray: "#6B7280",
       },
       fontFamily: {
         Roboto: ["Roboto", "sans-serif"],
@@ -67,6 +58,24 @@ export default {
           fontWeight: '400',
           lineHeight: '150%'
         }]
+      },
+      width: {
+        'product-detail': '900px',
+        'product-image': '300px',
+        'detail-image': '600px',
+        'nav-icon': '60px',
+      },
+      minWidth: {
+        'product-image': '300px',
+      },
+      minHeight: {
+        'product-image': '300px',
+      },
+      height: {
+        'navbar': '66px',
+        'product-image': '200px',
+        'detail-image': '600px',
+        'feature-block': '468px',
       }
     },
   },

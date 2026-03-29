@@ -39,8 +39,8 @@ function NavBar() {
 
     return (
     <nav className='fixed top-0 w-full flex flex-col bg-BorderGrey z-50'>
-        <section className='flex justify-between h-[66px] p-4 items-center'>
-            <div className='flex items-center w-[60px]'>
+        <section className='flex justify-between h-navbar p-4 items-center'>
+            <div className='flex items-center w-nav-icon'>
                 {showSearch ? (
                     <form onSubmit={handleSearch} className='flex items-center w-full'>
                         <input
