@@ -39,55 +39,59 @@ function NavBar() {
 
     return (
     <nav className='fixed top-0 w-full flex flex-col bg-BorderGrey z-50'>
-        <section className='flex justify-between h-navbar p-4 items-center'>
-            <div className='flex items-center w-nav-icon'>
-                {showSearch ? (
-                    <form onSubmit={handleSearch} className='flex items-center w-full'>
-                        <input
-                            type='text'
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder='Search...'
-                            className='w-full h-8 px-2 text-sm border border-gray-300 rounded focus:outline-none focus:border-Primary'
-                            autoFocus
-                        />
-                        <button type='submit' className='ml-1' aria-label='Search products'>
-                            <FaSearch size={18} />
-                        </button>
-                    </form>
-                ) : (
-                    <button onClick={() => setShowSearch(true)} className='flex items-center justify-center w-full h-full' aria-label='Open search'>
-                        <FaSearch color='black' size={24} />
-                    </button>
-                )}
+        <section className='flex h-navbar p-4 items-center'>
+            <div className='grid grid-cols-2 items-center w-full'>
+                <NavLink to='/ecommerceavion/' className='flex items-center w-44'>
+                    <img src={logo} alt="Logo" width={50} height={50}/>
+                    <p className='px-2 font-Roboto text-Headline_one text-Dark'>Avion</p>
+                    <img src={logo} alt="Logo" width={50} height={50}/>
+                </NavLink>
+                <div className='flex justify-end'>
+                    <div className='flex items-center w-auto'>
+                        {showSearch ? (
+                            <form onSubmit={handleSearch} className='flex items-center w-full'>
+                                <input
+                                    type='text'
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    placeholder='Search...'
+                                    className='w-20 h-8 px-2 text-sm border border-gray-300 rounded focus:outline-none focus:border-Primary'
+                                    autoFocus
+                                />
+                                <button type='submit' className='ml-1' aria-label='Search products'>
+                                    <FaSearch size={18} />
+                                </button>
+                            </form>
+                        ) : (
+                            <button onClick={() => setShowSearch(true)} className='flex items-center justify-center w-full h-full' aria-label='Open search'>
+                                <FaSearch color='black' size={24} />
+                            </button>
+                        )}
+                    </div>
+                    <ul className='flex justify-around text-botton font-Roboto'>
+                        <li className='pr-2 flex items-center relative'>
+                            <NavLink to='/ecommerceavion/shopping' className='pl-4' aria-label='Shopping cart'>
+                                <IoCartOutline size={24} />
+                            </NavLink>
+                            {cartItemsCount > 0 && (
+                                <span className='absolute -top-2 -right-0 bg-Dark text-Light text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full'>
+                                    {cartItemsCount}
+                                </span>
+                            )}
+                        </li>
+                        <li className='pr-6 ml-2 flex items-center' aria-label='User profile'>                    
+                            <CgProfile size={24} />
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <NavLink to='/ecommerceavion/' className='flex items-center w-44'>
-                <img src={logo} alt="Logo" width={50} height={50}/>
-                <p className='px-2 font-Roboto text-Headline_one text-Dark'>Avion</p>
-                <img src={logo} alt="Logo" width={50} height={50}/>
-            </NavLink>
-            <ul className='flex justify-around text-botton font-Roboto'>
-                <li className='pr-6 flex items-center relative'>
-                    <NavLink to='/ecommerceavion/shopping' className='pl-2' aria-label='Shopping cart'>
-                        <IoCartOutline size={24} />
-                    </NavLink>
-                    {cartItemsCount > 0 && (
-                        <span className='absolute -top-2 -right-2 bg-Dark text-Light text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full'>
-                            {cartItemsCount}
-                        </span>
-                    )}
-                </li>
-                <li className='pr-6 flex items-center' aria-label='User profile'>                    
-                    <CgProfile size={24} />
-                </li>
-            </ul>
             <div onClick={() => {
                 openMenu === 'hidden' ? setOpenMenu('flex') : setOpenMenu('hidden')
             }} className='lg:hidden flex items-center' role='button' aria-label='Open menu' aria-expanded={openMenu === 'flex'}>
                 <IoMdMenu size={50} />
             </div>
         </section>
-        <section className='hidden lg:flex justify-center h-[66px]'>
+        <section className='hidden lg:flex justify-center h-[66px] border-t-2 border-Dark'>
             <ul className='md:flex md:items-center md:text-Dark sm:hidden font-Open_Sans text-Headline_four'>
                 <li>
                     <NavLink to='/ecommerceavion/all_products'>All Products</NavLink>
