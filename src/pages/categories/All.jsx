@@ -21,13 +21,13 @@ function All() {
         <img src={allProducts} alt="All Products Header" className='w-full h-auto' />
       </div>
       {error && <ErrorMessage message={error} onRetry={() => getAllProducts(allProductos)} />}
-      <div className='flex flex-col xl:flex-row gap-6 justify-center'>
+      <div className='flex flex-col xl:flex-row gap-6 justify-between mx-auto xl:items-start'>
         <AsideOptions
           showCategoryFilter={true}
           showPriceFilter={true}
           showSortFilter={true}
         />
-        <section className='grow grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8 justify-items-center p-10'>
+        <section className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8 justify-items-center p-10'>
           {isLoading ? (
             // Mostrar skeletons mientras carga - 8 skeletons para mantener consistencia visual
             Array.from({ length: 8 }).map((_, index) => (

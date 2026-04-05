@@ -40,31 +40,31 @@ function ProductCart( ) {
                 <div className='flex flex-col items-center gap-6 text-center'>
                     <FaCheckCircle size={64} className='text-green-500' />
                     <h1 className='text-Headline_one font-Roboto text-Dark'>
-                        ¡Gracias por tu compra!
+                        ¡Thanks for your purchase!
                     </h1>
                     <p className='text-Body_medium font-Open_Sans text-Light'>
-                        Tu pedido ha sido procesado exitosamente.
+                        Your order has been processed successfully.
                     </p>
                     <p className='text-Body_small font-Open_Sans text-Light'>
-                        Te hemos enviado un correo electrónico con los detalles de tu compra.
+                        We have sent you an email with the details of your purchase.
                     </p>
                 </div>
                 <NavLink 
                     to='/ecommerceavion/' 
                     className='mt-8 bg-Primary text-Light px-8 py-3 text-Headline_five rounded hover:bg-Dark transition-colors'
                 >
-                    Volver a la tienda
+                    Return to homepage
                 </NavLink>
             </section>
         )
     }
 
   return (
-    <section className='flex flex-col gap-6 px-6 pb-32'>
+    <section className='max-w-6xl flex flex-col justify-around gap-6 mt-8 mx-auto px-6 pb-32'>
         <h1 className='text-Headline_three font-Roboto'>
             Your shopping cart
         </h1>
-        <div>
+        <div className='flex flex-col items-center'>
             {cartProducts.length === 0 
                 ? <p>Your cart is empty</p> 
                 : cartProducts.map(product => (
@@ -86,7 +86,7 @@ function ProductCart( ) {
                 disabled={isProcessing}
                 className='w-full bg-Dark text-Light py-4 hover:bg-Primary transition-colors disabled:opacity-50'
             >
-                {isProcessing ? 'Processing...' : 'Finalizar compra'}
+                {isProcessing ? 'Processing...' : 'Place your order'}
             </button>
         )}
     </section>

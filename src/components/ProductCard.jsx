@@ -20,7 +20,7 @@ const ProductCard = memo(function ProductCard( {data} ) {
 
   return (
     <>
-      <article className='flex flex-col gap-4 w-60 p-4 border border-Gray'>
+      <article className='flex flex-col justify-between gap-4 w-60 h-[480px] p-4 border border-Gray'>
         <figure className='mb-4'>
             <img 
               className='w-60 h-product-image object-cover' 
@@ -29,7 +29,7 @@ const ProductCard = memo(function ProductCard( {data} ) {
               loading='lazy'
             />
         </figure>
-        <div className='flex flex-col justify-between h-full gap-4'>
+        <div className='flex flex-col justify-between h-auto gap-4'>
           <span className='text-Body_large font-Roboto text-Dark mb-2'>{data.title}</span>
           <div className='flex items-center gap-2'>
             <FaStar size={14} className='text-yellow-400' aria-label={`Rating: ${data.rating} out of 5`} />

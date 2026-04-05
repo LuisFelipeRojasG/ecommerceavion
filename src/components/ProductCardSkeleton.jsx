@@ -7,14 +7,14 @@ import { memo } from 'react'
  */
 const ProductCardSkeleton = memo(function ProductCardSkeleton() {
   return (
-    <article className='flex flex-col gap-4 w-60 p-4 border border-Gray'>
+    <article className='flex flex-col gap-4 w-60 h-[480px] p-4 border border-Gray'>
       {/* Imagen skeleton - misma dimensión que ProductCard */}
       <figure className='mb-4'>
-        <div className='w-60 h-product-image bg-gray-200 animate-pulse rounded' />
+        <div className='w-52 h-product-image bg-gray-200 animate-pulse rounded' />
       </figure>
       
       {/* Contenido skeleton */}
-      <div className='flex flex-col justify-between h-full gap-4'>
+      <div className='flex flex-col justify-between h-auto gap-4'>
         {/* Título skeleton */}
         <div className='h-6 bg-gray-200 animate-pulse rounded w-48 mb-2' />
         

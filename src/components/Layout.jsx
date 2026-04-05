@@ -14,7 +14,7 @@ function Layout() {
   return (
     <div className='flex flex-col'>
       <NavBar />
-      <div id='layout' className='w-full mt-16 md:mt-36'>
+      <div id='layout' className='w-full mt-16 md:mt-32'>
         <Outlet />
       </div>
       <Footer />
