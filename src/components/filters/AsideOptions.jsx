@@ -1,5 +1,4 @@
 
-import useAvionContext from '../../context/UseContext'
 import FilterButton from '../../components/filters/FilterButton'
 import ShortingButton from '../../components/filters/ShortingButton'
 import CategoryFilterMobile from './CategoryFilterMobile'
@@ -8,24 +7,22 @@ import ClearButton from './ClearButton'
 function AsideOptions({
   showCategoryFilter = true,
   showPriceFilter = true,
-  showSortFilter = true
+  showSortFilter = true,
+  selectedPriceRanges = [],
+  togglePriceRange,
+  selectedCategories = [],
+  toggleCategory,
+  sortOrder = null,
+  setSortOrder,
+  clearFilters,
+  priceRanges = [],
+  dataCategories = []
 }) {
   // Props para controlar qué filtros se muestran
   // showCategoryFilter: mostrar filtro de categorías (solo en página All)
   // showPriceFilter: mostrar filtro de precio (siempre)
   // showSortFilter: mostrar ordenamiento alfabético (siempre)
-
-  const {
-    dataCategories,
-    selectedPriceRanges,
-    togglePriceRange,
-    selectedCategories,
-    toggleCategory,
-    sortOrder,
-    setSortOrder,
-    clearAllFilters,
-    priceRanges
-  } = useAvionContext()
+  // Los filtros ahora se pasan como props para permitir filtros independientes por página
 
   // Verifica si hay filtros activos para habilitar/deshabilitar el botón limpiar
   const hasActiveFilters =
@@ -39,12 +36,12 @@ function AsideOptions({
             {showPriceFilter && <FilterButton />}
             {showSortFilter && <ShortingButton />}
             {showCategoryFilter && <CategoryFilterMobile />}
-            <ClearButton />
+            <ClearButton onClear={clearFilters} disabled={!hasActiveFilters} />
         </div>
         <div className='hidden xl:flex flex-col gap-4 w-72 h-auto'>
           <div className='flex justify-end pr-6'>
             <button
-              onClick={clearAllFilters}
+              onClick={clearFilters}
               disabled={!hasActiveFilters}
               className={`px-4 py-2 text-Headline_six font-Open_Sans rounded transition-colors ${
                 hasActiveFilters
@@ -117,6 +114,8 @@ function AsideOptions({
                   <option value=''>Default</option>
                   <option value='asc'>Name (A - Z)</option>
                   <option value='desc'>Name (Z - A)</option>
+                  <option value='price-asc'>Price (Low to High)</option>
+                  <option value='price-desc'>Price (High to Low)</option>
                 </select>
               </div>
             </div>

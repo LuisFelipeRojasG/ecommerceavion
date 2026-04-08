@@ -1,21 +1,12 @@
-import useAvionContext from '../../context/UseContext'
 
-function ClearButton() {
-
-    const { selectedPriceRanges, selectedCategories, sortOrder, clearAllFilters } = useAvionContext()
-
-    const hasActiveFilters = 
-        selectedPriceRanges.length > 0 ||
-        selectedCategories.length > 0 ||
-        sortOrder !== null
-
-    if (!hasActiveFilters) {
+function ClearButton({ onClear, disabled = false }) {
+    if (disabled) {
         return null
     }
 
     return (
         <button
-            onClick={clearAllFilters}
+            onClick={onClear}
             className="px-6 h-16 flex items-center justify-center bg-Dark text-Light text-Headline_four font-Open_Sans hover:bg-Primary transition-colors"
             type="button"
         >
@@ -23,5 +14,4 @@ function ClearButton() {
         </button>
     )
 }
-
 export default ClearButton

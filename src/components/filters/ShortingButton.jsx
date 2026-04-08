@@ -1,10 +1,7 @@
 import { useState } from "react"
 import { FaCaretDown } from "react-icons/fa"
-import useAvionContext from '../../context/UseContext'
 
-function ShortingButton() {
-
-    const { sortOrder, setSortOrder } = useAvionContext()
+function ShortingButton({ sortOrder = null, setSortOrder }) {
     const [openDropdownShorting, setOpenDropdownShorting] = useState('hidden')
 
     const handleSort = (order) => {

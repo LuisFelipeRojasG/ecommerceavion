@@ -1,10 +1,7 @@
 import { useState } from "react"
 import { FaCaretDown } from "react-icons/fa"
-import useAvionContext from '../../context/UseContext'
 
-function FilterButton() {
-
-    const { priceRanges, togglePriceRange, selectedPriceRanges } = useAvionContext()
+function FilterButton({ priceRanges = [], togglePriceRange, selectedPriceRanges = [] }) {
     const [openDropdownFilter, setOpenDropdownFilter] = useState('hidden')
 
     const handlePriceSelect = (range) => {

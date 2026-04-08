@@ -1,10 +1,7 @@
 import { useState } from "react"
 import { FaCaretDown } from "react-icons/fa"
-import useAvionContext from '../../context/UseContext'
 
-function CategoryFilterMobile() {
-
-    const { dataCategories, toggleCategory, selectedCategories } = useAvionContext()
+function CategoryFilterMobile({ dataCategories = [], toggleCategory, selectedCategories = [] }) {
     const [openDropdownCategory, setOpenDropdownCategory] = useState('hidden')
 
     const handleCategorySelect = (slug) => {
