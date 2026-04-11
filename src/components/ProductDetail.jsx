@@ -16,7 +16,7 @@ function ProductDetail() {
     const handleAddToCart = (e) => {
         e.preventDefault()
         addToCart(productDetail, quantity)
-        setIsProductDetailOpen(false)        
+        setIsProductDetailOpen(false)
     }
 
   

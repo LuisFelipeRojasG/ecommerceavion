@@ -33,9 +33,9 @@ function AsideOptions({
   return (
     <aside>
         <div className='grow-0 xl:hidden w-screen h-auto min-h-20 flex flex-wrap justify-center gap-4 mt-10 pb-4'>
-            {showPriceFilter && <FilterButton />}
-            {showSortFilter && <ShortingButton />}
-            {showCategoryFilter && <CategoryFilterMobile />}
+            {showPriceFilter && <FilterButton priceRanges={priceRanges} togglePriceRange={togglePriceRange} selectedPriceRanges={selectedPriceRanges} />}
+            {showSortFilter && <ShortingButton sortOrder={sortOrder} setSortOrder={setSortOrder} />}
+            {showCategoryFilter && <CategoryFilterMobile dataCategories={dataCategories} toggleCategory={toggleCategory} selectedCategories={selectedCategories} />}
             <ClearButton onClear={clearFilters} disabled={!hasActiveFilters} />
         </div>
         <div className='hidden xl:flex flex-col gap-4 w-72 h-auto'>
