@@ -3,10 +3,9 @@ import useAvionContext from "../context/UseContext";
 
 function MobileMenu() {
 
-    const { setOpenMenu, dataCategories, getProductsCategory } = useAvionContext();
+    const { setOpenMenu, dataCategories } = useAvionContext();
 
-    const handleLinkClick = (action) => {
-        if (action) action()
+    const handleLinkClick = () => {
         setOpenMenu('hidden')
     }
 
@@ -19,10 +18,9 @@ function MobileMenu() {
             dataCategories?.slice(0, 5).map(category => {
                 const key = category?.slug || category?.id || category
                     const label = category?.name || category
-                    const categoryUrl = category?.url
                     return (
                         <li className='p-4 font-Open_Sans text-Headline_four' key={key}>
-                            <NavLink to={`/ecommerceavion/products/${category.slug}`} onClick={() => handleLinkClick(() => getProductsCategory(categoryUrl))}>{label}</NavLink>
+                            <NavLink to={`/ecommerceavion/products/${category.slug}`} onClick={handleLinkClick}>{label}</NavLink>
                         </li>
                     )
             })

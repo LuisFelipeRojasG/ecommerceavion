@@ -1,20 +1,35 @@
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import ProductCard from '../../components/ProductCard'
 import ProductCardSkeleton from '../../components/ProductCardSkeleton'
 import ErrorMessage from '../../components/ErrorMessage'
 import useAvionContext from '../../context/UseContext'
-import allProducts from '../../assets/pageHeaders.webp'
+import allProductsHeader from '../../assets/pageHeaders.webp'
 import AsideOptions from '../../components/filters/AsideOptions'
 import { allProductos } from '../../api/indexApi'
 
 function All() {
 
-  const { dataProducts, isLoading, error, getAllProducts, priceRanges, dataCategories } = useAvionContext()
+  const {
+    dataProducts,
+    isLoading,
+    error,
+    getAllProducts,
+    priceRanges,
+    dataCategories,
+    filterAndSortProducts
+  } = useAvionContext()
 
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([])
   const [selectedCategories, setSelectedCategories] = useState([])
   const [sortOrder, setSortOrder] = useState(null)
+
+  // Carga el catálogo al entrar directamente a la página o al recargar
+  useEffect(() => {
+    if (dataProducts.length === 0) {
+      getAllProducts(allProductos)
+    }
+  }, [dataProducts.length, getAllProducts])
 
   const togglePriceRange = (range) => {
     setSelectedPriceRanges(prev =>
@@ -39,39 +54,17 @@ function All() {
   }
 
   const displayedProducts = useMemo(() => {
-    let result = [...dataProducts]
-
-    if (selectedPriceRanges.length > 0) {
-      result = result.filter(product =>
-        selectedPriceRanges.some(range =>
-          product.price >= range.min && product.price <= range.max
-        )
-      )
-    }
-
-    if (selectedCategories.length > 0) {
-      result = result.filter(product =>
-        selectedCategories.includes(product.category)
-      )
-    }
-
-    if (sortOrder === 'asc') {
-      result.sort((a, b) => a.title.localeCompare(b.title))
-    } else if (sortOrder === 'desc') {
-      result.sort((a, b) => b.title.localeCompare(a.title))
-    } else if (sortOrder === 'price-asc') {
-      result.sort((a, b) => a.price - b.price)
-    } else if (sortOrder === 'price-desc') {
-      result.sort((a, b) => b.price - a.price)
-    }
-
-    return result
-  }, [dataProducts, selectedPriceRanges, selectedCategories, sortOrder])
+    return filterAndSortProducts(dataProducts, {
+      selectedPriceRanges,
+      selectedCategories,
+      sortOrder
+    })
+  }, [dataProducts, selectedPriceRanges, selectedCategories, sortOrder, filterAndSortProducts])
 
   return (
     <div className='grid grid-cols-1'>
       <div className='w-full'>
-        <img src={allProducts} alt="All Products Header" className='w-full h-auto' />
+        <img src={allProductsHeader} alt="All Products Header" className='w-full h-auto' />
       </div>
       {error && <ErrorMessage message={error} onRetry={() => getAllProducts(allProductos)} />}
       <div className='flex flex-col xl:flex-row gap-6 justify-between mx-auto xl:items-start'>
@@ -94,8 +87,8 @@ function All() {
             Array.from({ length: 8 }).map((_, index) => (
               <ProductCardSkeleton key={index} />
             ))
-          ) : displayedProducts && displayedProducts.length > 0 ? (
-            displayedProducts?.map(product => (
+          ) : displayedProducts.length > 0 ? (
+            displayedProducts.map(product => (
               <ProductCard
                 key={product.id}
                 data={product}

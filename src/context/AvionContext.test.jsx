@@ -204,7 +204,7 @@ describe('AvionContext', () => {
     )
 
     const getTotalBtn = screen.getByTestId('get-cart-total')
-    const total = getTotalBtn.click()
+    getTotalBtn.click()
 
     await waitFor(() => {
       expect(screen.getByTestId('cart-count').textContent).toBe('2')

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { BrowserRouter } from 'react-router'
 import ProductCard from './ProductCard'
 import { AvionProvider } from '../context/AvionContext'
@@ -10,14 +10,6 @@ const mockProduct = {
   price: 99.99,
   rating: 4.5,
   images: ['https://via.placeholder.com/240'],
-}
-
-const renderWithRouter = (ui) => {
-  return render(
-    <BrowserRouter>
-      {ui}
-    </BrowserRouter>
-  )
 }
 
 const renderWithContext = (ui) => {

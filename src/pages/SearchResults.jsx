@@ -12,9 +12,14 @@ function SearchResults() {
     const [error, setError] = useState(null)
 
     useEffect(() => {
+        const controller = new AbortController()
+        let ignore = false
+
         const searchProducts = async () => {
             if (!query.trim()) {
                 setSearchResults([])
+                setLoading(false)
+                setError(null)
                 return
             }
 
@@ -22,18 +27,29 @@ function SearchResults() {
             setError(null)
 
             try {
-                const response = await fetch(`https://dummyjson.com/products/search?q=${encodeURIComponent(query)}`)
+                const response = await fetch(
+                    `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}`,
+                    { signal: controller.signal }
+                )
+                if (!response.ok) throw new Error('Request failed')
+
                 const data = await response.json()
-                setSearchResults(data.products || [])
+                if (!ignore) setSearchResults(data.products || [])
             } catch (err) {
+                if (ignore || err.name === 'AbortError') return
                 console.log(err)
                 setError('Error fetching search results')
             } finally {
-                setLoading(false)
+                if (!ignore) setLoading(false)
             }
         }
 
         searchProducts()
+
+        return () => {
+            ignore = true
+            controller.abort()
+        }
     }, [query])
 
     return (

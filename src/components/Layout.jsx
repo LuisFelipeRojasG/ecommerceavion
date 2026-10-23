@@ -1,31 +1,26 @@
 
 import { Outlet } from 'react-router'
-import { createPortal } from 'react-dom'
 import useAvionContext from '../context/UseContext'
-import ProductDetail from './ProductDetail'
 import NavBar from './NavBar'
 import Footer from './Footer'
 import Toast from './Toast'
 
 function Layout() {
 
-  const { isProductDetailOpen, toast, hideToast } = useAvionContext()
+  const { toast, hideToast } = useAvionContext()
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col min-h-screen'>
       <NavBar />
-      <div id='layout' className='w-full mt-16 md:mt-32'>
+      <div id='layout' className='w-full flex-1 mt-16 md:mt-32'>
         <Outlet />
       </div>
       <Footer />
-      {isProductDetailOpen && createPortal(
-        <ProductDetail />, document.getElementById('layout')
-      )}
       {toast && (
-        <Toast 
-          message={toast.message} 
-          type={toast.type} 
-          onClose={hideToast} 
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={hideToast}
         />
       )}
     </div>

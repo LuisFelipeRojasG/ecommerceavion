@@ -27,7 +27,7 @@ Tienda en línea construida con React, Vite y Tailwind CSS. Consume datos de la 
 
 ### UI/UX
 - Diseño responsive (mobile-first)
-- Modal de detalles de producto
+- Página de detalles de producto
 - Rating de productos visible
 - Imágenes con lazy loading
 

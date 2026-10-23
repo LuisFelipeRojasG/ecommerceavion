@@ -6,13 +6,17 @@ function ProductCardCart({ data }) {
 
     const { updateCartItemQuantity, removeFromCart } = useAvionContext()
 
+    const quantity = Math.max(1, Number(data.quantity) || 1)
+    const unitPrice = Number(data.price) || 0
+    const total = unitPrice * quantity
+
     const handleIncrement = () => {
-        updateCartItemQuantity(data.id, data.quantity + 1)
+        updateCartItemQuantity(data.id, quantity + 1)
     }
 
     const handleDecrement = () => {
-        if (data.quantity > 1) {
-            updateCartItemQuantity(data.id, data.quantity - 1)
+        if (quantity > 1) {
+            updateCartItemQuantity(data.id, quantity - 1)
         }
     }
 
@@ -23,7 +27,7 @@ function ProductCardCart({ data }) {
   return (
     <article className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mb-10 border border-Gray p-4">
         <figure className='flex justify-center md:col-span-1'>
-            <img className='w-60 h-60 object-cover items-center' src={data.images[0]} alt={data.title} />
+            <img className='w-60 h-60 object-cover items-center' src={data.images?.[0] || ''} alt={data.title} />
         </figure>
         <div className='md:col-span-2 flex flex-col gap-2'>
             <div className='flex justify-between items-start'>
@@ -44,11 +48,11 @@ function ProductCardCart({ data }) {
                         <button 
                             onClick={handleDecrement}
                             className='px-3 py-1 hover:bg-LightGrey transition-colors'
-                            disabled={data.quantity <= 1}
+                            disabled={quantity <= 1}
                         >
                             -
                         </button>
-                        <span className='px-4 font-Open_Sans text-Body_medium'>{data.quantity}</span>
+                        <span className='px-4 font-Open_Sans text-Body_medium'>{quantity}</span>
                         <button 
                             onClick={handleIncrement}
                             className='px-3 py-1 hover:bg-LightGrey transition-colors'
@@ -58,8 +62,8 @@ function ProductCardCart({ data }) {
                     </div>
                 </div>
                 <div className='flex items-center gap-4'>
-                    <span className="font-Open_Sans text-Body_medium">Unit: ${data.price}</span>
-                    <span className="font-Roboto text-Headline_four font-bold">Total: ${data.total.toFixed(2)}</span>
+                    <span className="font-Open_Sans text-Body_medium">Unit: ${unitPrice}</span>
+                    <span className="font-Roboto text-Headline_four font-bold">Total: ${total.toFixed(2)}</span>
                 </div>
             </div>
         </div>

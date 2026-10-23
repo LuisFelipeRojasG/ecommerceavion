@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 
 /**
  * Componente Toast flotante para mostrar notificaciones temporales
@@ -41,24 +41,6 @@ function Toast({ message, type = 'success', onClose, duration = 3000 }) {
             </div>
         </div>
     )
-}
-
-/**
- * Hook personalizado para gestionar toasts en la aplicación
- * Proporciona funciones para mostrar diferentes tipos de notificaciones
- */
-export function useToast() {
-    const [toast, setToast] = useState(null)
-
-    const showToast = (message, type = 'success') => {
-        setToast({ message, type })
-    }
-
-    const hideToast = () => {
-        setToast(null)
-    }
-
-    return { toast, showToast, hideToast }
 }
 
 export default Toast

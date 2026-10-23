@@ -4,6 +4,8 @@ const apiUrl = 'https://dummyjson.com'
 
 const allProductos = apiUrl + '/products?limit=0'
 const allCategories = apiUrl + '/products/categories'
+const productById = (id) => `${apiUrl}/products/${id}`
+const productsByCategory = (category) => `${apiUrl}/products/category/${category}`
 
 
-export { allProductos, allCategories }
+export { allProductos, allCategories, productById, productsByCategory }

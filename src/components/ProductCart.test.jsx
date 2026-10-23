@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { BrowserRouter } from 'react-router'
 import ProductCart from './ProductCart'
@@ -71,7 +71,7 @@ describe('ProductCart', () => {
 
   it('calculates correct subtotal with multiple products', () => {
     const products = [
-      { ...mockProductInCart, id: 1, total: 100 },
+      { ...mockProductInCart, id: 1, price: 50, quantity: 2, total: 100 },
       { ...mockProductInCart, id: 2, price: 50, quantity: 2, total: 100 },
     ]
     localStorage.setItem('cartProducts', JSON.stringify(products))

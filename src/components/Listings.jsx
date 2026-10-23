@@ -11,9 +11,11 @@ function Listings() {
 
 
   useEffect(() => {
-    getAllProducts(allProductos)
-      
-  }, [])
+    // Evita recargar el catálogo si ya fue obtenido (por ejemplo, al volver al Home)
+    if (dataProducts.length === 0) {
+      getAllProducts(allProductos)
+    }
+  }, [dataProducts.length, getAllProducts])
 
   return (
     <section className='col-start-1 col-end-5 md:col-end-13 text-center pb-24'>
@@ -26,14 +28,14 @@ function Listings() {
             ))
           ) : (
             dataProducts?.slice(0, 4).map(product => (
-              <ProductCard 
-                key={product.id} 
+              <ProductCard
+                key={product.id}
                 data={product}
               />
             ))
           )}
         </div>
-        <button 
+        <button
           className='w-full py-4 bg-BorderGrey text-Headline_two text-Dark'
           onClick={() => navigate('/ecommerceavion/all_products')}
         >

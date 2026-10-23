@@ -11,7 +11,7 @@ import { allCategories } from '../api/indexApi'
 
 function NavBar() {
 
-    const { openMenu, setOpenMenu, getAllCategories, dataCategories, getProductsCategory, getCartItemsCount, cartProducts } = useAvionContext()
+    const { openMenu, setOpenMenu, getAllCategories, dataCategories, getCartItemsCount } = useAvionContext()
     const navigate = useNavigate()
     
     const [showSearch, setShowSearch] = useState(false)
@@ -22,11 +22,11 @@ function NavBar() {
      * getCartItemsCount() se ejecuta en cada render sin esto
      * Solo se recalcula cuando cambia cartProducts
      */
-    const cartItemsCount = useMemo(() => getCartItemsCount(), [cartProducts])
+    const cartItemsCount = useMemo(() => getCartItemsCount(), [getCartItemsCount])
 
     useEffect(() => {
         getAllCategories(allCategories)
-    }, [])
+    }, [getAllCategories])
 
     const handleSearch = (e) => {
         e.preventDefault()
@@ -100,12 +100,9 @@ function NavBar() {
                     dataCategories?.slice(0, 5).map(category => {
                         const key = category?.slug || category?.id || category
                         const label = category?.name || category
-                        const categoryUrl = category?.url
                         return (
                             <li className='p-4 font-Open_Sans text-Headline_four' key={key}>
-                                <NavLink to={`/ecommerceavion/products/${category.slug}`} onClick={() => {
-                                    getProductsCategory(categoryUrl)
-                                }}>{label}</NavLink>
+                                <NavLink to={`/ecommerceavion/products/${category.slug}`}>{label}</NavLink>
                             </li>
                         )
                     })

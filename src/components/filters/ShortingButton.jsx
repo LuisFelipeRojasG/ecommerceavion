@@ -18,7 +18,7 @@ function ShortingButton({ sortOrder = null, setSortOrder }) {
                 aria-label='Sort products'
                 aria-expanded={openDropdownShorting === 'flex'}
             >
-                Shorting
+                Sort
                 <FaCaretDown className="ml-2" />
             </button>
             <div className={`z-10 ${openDropdownShorting} absolute top-full left-0 bg-LightGrey border border-default-medium rounded-base shadow-lg w-44 p-4`}>

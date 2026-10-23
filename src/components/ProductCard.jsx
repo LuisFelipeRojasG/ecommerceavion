@@ -15,7 +15,7 @@ const ProductCard = memo(function ProductCard( {data} ) {
   let navigate = useNavigate()
   const exportProductDetail = (productData) => {
     setProductDetail(productData)
-    navigate('/ecommerceavion/detail')
+    navigate(`/ecommerceavion/detail/${productData.id}`)
   }
 
   return (
@@ -24,7 +24,7 @@ const ProductCard = memo(function ProductCard( {data} ) {
         <figure className='mb-4'>
             <img 
               className='w-60 h-product-image object-cover' 
-              src={data.images[0]} 
+              src={data.images?.[0] || ''} 
               alt={data.title}
               loading='lazy'
             />

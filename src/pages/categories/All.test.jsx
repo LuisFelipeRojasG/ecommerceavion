@@ -17,6 +17,10 @@ const renderWithContext = (ui) => {
 describe('All page', () => {
   beforeEach(() => {
     localStorage.clear()
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ products: [] })
+    }))
   })
 
   it('renders product header', () => {
@@ -45,11 +49,11 @@ describe('All page', () => {
   it('renders price range options', () => {
     renderWithContext(<All />)
 
-    expect(screen.getByText('$ < 10')).toBeInTheDocument()
-    expect(screen.getByText('$ 10 - 20')).toBeInTheDocument()
-    expect(screen.getByText('$ 20 - 50')).toBeInTheDocument()
-    expect(screen.getByText('$ 50 - 100')).toBeInTheDocument()
-    expect(screen.getByText('$ > 100')).toBeInTheDocument()
+    expect(screen.getAllByText('$ < 10').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('$ 10 - 20').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('$ 20 - 50').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('$ 50 - 100').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('$ > 100').length).toBeGreaterThan(0)
   })
 
   it('renders clear all filters button', () => {
@@ -66,10 +70,10 @@ describe('All page', () => {
     expect(screen.getByText('Default')).toBeInTheDocument()
   })
 
-  it('displays no products message when data is empty', () => {
+  it('displays no products message when data is empty', async () => {
     renderWithContext(<All />)
 
-    expect(screen.getByText('No products available at the moment')).toBeInTheDocument()
+    expect(await screen.findByText('No products available at the moment')).toBeInTheDocument()
     expect(screen.getByText('Try adjusting your filters or check back later')).toBeInTheDocument()
   })
 })

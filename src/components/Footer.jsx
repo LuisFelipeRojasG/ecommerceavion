@@ -5,7 +5,7 @@ import useAvionContext from '../context/UseContext'
 
 function Footer() {
 
-    const { dataCategories, getProductsCategory } = useAvionContext()
+    const { dataCategories } = useAvionContext()
 
   return (
     <section className="w-full flex flex-col items-center justify-center bg-DarkPrimary text-Light p-10">
@@ -23,18 +23,15 @@ function Footer() {
                     <h3 className="pb-2 text-Headline_three">Categories</h3>
                     <ul>
                         <li>
-                            <NavLink to='/all_products'>All Products</NavLink>
+                            <NavLink to='/ecommerceavion/all_products'>All Products</NavLink>
                         </li>
                         {
                             dataCategories?.slice(0, 6).map(category => {
                                 const key = category?.slug || category?.id || category
                                 const label = category?.name || category
-                                const categoryUrl = category?.url
                                 return (
                                     <li key={key}>
-                                        <NavLink to={`/products/${category.slug}`} onClick={() => {
-                                            getProductsCategory(categoryUrl)
-                                        }}>{label}</NavLink>
+                                        <NavLink to={`/ecommerceavion/products/${category.slug}`}>{label}</NavLink>
                                     </li>
                                 )
                             })

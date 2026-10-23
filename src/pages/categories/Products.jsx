@@ -1,22 +1,35 @@
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useParams } from 'react-router'
 import useAvionContext from '../../context/UseContext'
 import ProductCard from '../../components/ProductCard'
 import ProductCardSkeleton from '../../components/ProductCardSkeleton'
 import ErrorMessage from '../../components/ErrorMessage'
 import AsideOptions from '../../components/filters/AsideOptions'
+import { productsByCategory } from '../../api/indexApi'
 
 function Products() {
 
   const { category } = useParams()
-  
-  const { dataProductsCategory, isLoading, error, getProductsCategory, priceRanges } = useAvionContext()
 
-  const categoryUrl = `https://dummyjson.com/products/category/${category}`
+  const {
+    dataProductsCategory,
+    isLoadingCategoryProducts,
+    categoryProductsError,
+    getProductsCategory,
+    priceRanges,
+    filterAndSortProducts
+  } = useAvionContext()
+
+  const categoryUrl = productsByCategory(category)
 
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([])
   const [sortOrder, setSortOrder] = useState(null)
+
+  // Carga la categoría al entrar directamente o al cambiar de categoría
+  useEffect(() => {
+    getProductsCategory(categoryUrl)
+  }, [categoryUrl, getProductsCategory])
 
   const togglePriceRange = (range) => {
     setSelectedPriceRanges(prev =>
@@ -32,32 +45,20 @@ function Products() {
   }
 
   const displayedProducts = useMemo(() => {
-    let result = [...dataProductsCategory]
-
-    if (selectedPriceRanges.length > 0) {
-      result = result.filter(product =>
-        selectedPriceRanges.some(range =>
-          product.price >= range.min && product.price <= range.max
-        )
-      )
-    }
-
-    if (sortOrder === 'asc') {
-      result.sort((a, b) => a.title.localeCompare(b.title))
-    } else if (sortOrder === 'desc') {
-      result.sort((a, b) => b.title.localeCompare(a.title))
-    } else if (sortOrder === 'price-asc') {
-      result.sort((a, b) => a.price - b.price)
-    } else if (sortOrder === 'price-desc') {
-      result.sort((a, b) => b.price - a.price)
-    }
-
-    return result
-  }, [dataProductsCategory, selectedPriceRanges, sortOrder])
+    return filterAndSortProducts(dataProductsCategory, {
+      selectedPriceRanges,
+      sortOrder
+    })
+  }, [dataProductsCategory, selectedPriceRanges, sortOrder, filterAndSortProducts])
 
   return (
     <div className='grid grid-cols-1'>
-      {error && <ErrorMessage message={error} onRetry={() => getProductsCategory(categoryUrl)} />}
+      {categoryProductsError && (
+        <ErrorMessage
+          message={categoryProductsError}
+          onRetry={() => getProductsCategory(categoryUrl)}
+        />
+      )}
       <div className='flex flex-col xl:flex-row gap-6 mt-20 justify-between mx-auto'>
         <AsideOptions
           showCategoryFilter={false}
@@ -71,12 +72,12 @@ function Products() {
           priceRanges={priceRanges}
         />
         <section className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8 justify-items-center p-10'>
-          {isLoading ? (
+          {isLoadingCategoryProducts ? (
             Array.from({ length: 8 }).map((_, index) => (
               <ProductCardSkeleton key={index} />
             ))
-          ) : displayedProducts && displayedProducts.length > 0 ? (
-            displayedProducts?.map(product => (
+          ) : displayedProducts.length > 0 ? (
+            displayedProducts.map(product => (
               <ProductCard
                 key={product.id}
                 data={product}

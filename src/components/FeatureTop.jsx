@@ -3,6 +3,8 @@ import { GrDeliver } from "react-icons/gr"
 import { MdOutlinePayment } from "react-icons/md"
 import FeatureCard from './FeatureCard'
 
+const mobileRowStartClasses = ['row-start-2', 'row-start-3', 'row-start-4', 'row-start-5']
+
 function FeatureTop() {
   const features = [
     {
@@ -36,7 +38,7 @@ function FeatureTop() {
         {features.map((feature, index) => (
           <div
             key={index}
-            className={`row-start-${index + 2} col-span-4 lg:col-span-6 xl:col-span-4 ${
+            className={`${mobileRowStartClasses[index]} col-span-4 lg:col-span-6 xl:col-span-4 ${
               index % 2 === 0 ? 'xl:col-start-3' : 'xl:col-start-7'
             } lg:row-start-2 ${index >= 2 ? 'lg:row-start-3' : ''}`}
           >
