@@ -50,7 +50,7 @@ function ProductCart( ) {
                     </p>
                 </div>
                 <NavLink 
-                    to='/ecommerceavion/' 
+                    to='/'
                     className='mt-8 bg-Primary text-Light px-8 py-3 text-Headline_five rounded hover:bg-Dark transition-colors'
                 >
                     Return to homepage

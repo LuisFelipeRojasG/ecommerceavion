@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Redirecting...</title>
+    <script>
+      (function () {
+        var base = '/ecommerceavion/'
+        var path = window.location.pathname
+
+        if (path.indexOf(base) === 0) {
+          path = path.slice(base.length)
+        } else {
+          path = path.replace(/^\/+/, '')
+        }
+
+        try {
+          sessionStorage.setItem(
+            'redirectPath',
+            path + window.location.search + window.location.hash
+          )
+        } catch (error) {
+          console.log(error)
+        }
+
+        window.location.replace(base)
+      })()
+    </script>
+  </head>
+  <body></body>
+</html>

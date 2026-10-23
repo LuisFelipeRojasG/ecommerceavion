@@ -12,7 +12,7 @@ function ErrorPage() {
         <i>{error?.statusText || error?.message || "Unknown error"}</i>
       </p>
       <Link
-        to="/ecommerceavion/"
+        to="/"
         className="mt-4 bg-Primary text-Light px-8 py-3 text-Headline_five rounded hover:bg-Dark transition-colors"
       >
         Return to homepage

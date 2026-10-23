@@ -23,7 +23,7 @@ function Footer() {
                     <h3 className="pb-2 text-Headline_three">Categories</h3>
                     <ul>
                         <li>
-                            <NavLink to='/ecommerceavion/all_products'>All Products</NavLink>
+                            <NavLink to='/all_products'>All Products</NavLink>
                         </li>
                         {
                             dataCategories?.slice(0, 6).map(category => {
@@ -31,7 +31,7 @@ function Footer() {
                                 const label = category?.name || category
                                 return (
                                     <li key={key}>
-                                        <NavLink to={`/ecommerceavion/products/${category.slug}`}>{label}</NavLink>
+                                        <NavLink to={`/products/${category.slug}`}>{label}</NavLink>
                                     </li>
                                 )
                             })

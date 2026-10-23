@@ -83,7 +83,9 @@ No requiere variables de entorno. El proyecto usa la API pública de DummyJSON:
 
 El proyecto está configurado para desplegarse automáticamente en GitHub Pages mediante GitHub Actions.
 
-URL de producción: https://luisfeliperojasg.github.io/ecommerceAvion/
+URL de producción: https://luisfeliperojasg.github.io/ecommerceavion/
+
+Las rutas usan el `base` de Vite como `basename` del router. `public/404.html` restaura las rutas profundas cuando GitHub Pages las sirve como error 404.
 
 ## Licencia
 

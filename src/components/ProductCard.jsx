@@ -15,7 +15,7 @@ const ProductCard = memo(function ProductCard( {data} ) {
   let navigate = useNavigate()
   const exportProductDetail = (productData) => {
     setProductDetail(productData)
-    navigate(`/ecommerceavion/detail/${productData.id}`)
+    navigate(`/detail/${productData.id}`)
   }
 
   return (

@@ -56,7 +56,7 @@ function SearchResults() {
         <div className='grid grid-cols-1'>
             <div className='w-full'>
                 <div className='bg-LightGrey p-4 flex items-center gap-4'>
-                    <NavLink to='/ecommerceavion/' className='flex items-center gap-2 text-Headline_four text-Dark hover:text-Primary'>
+                    <NavLink to='/' className='flex items-center gap-2 text-Headline_four text-Dark hover:text-Primary'>
                         <FaArrowLeft />
                         Back
                     </NavLink>
@@ -86,7 +86,7 @@ function SearchResults() {
             {!loading && !error && searchResults.length === 0 && query && (
                 <div className='flex flex-col justify-center items-center py-20'>
                     <p className='text-Headline_four text-Dark'>No products found for &quot;{query}&quot;</p>
-                    <NavLink to='/ecommerceavion/all_products' className='mt-4 text-Primary hover:underline'>
+                    <NavLink to='/all_products' className='mt-4 text-Primary hover:underline'>
                         View all products
                     </NavLink>
                 </div>

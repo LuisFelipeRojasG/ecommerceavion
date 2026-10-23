@@ -219,7 +219,7 @@ Uses `react-router` v7 with nested routes:
 ## Environment Notes
 - No `.env` file required (uses public DummyJSON API)
 - Build output goes to `dist/` directory
-- Deployed to GitHub Pages at `https://luisfeliperojasg.github.io/ecommerceAvion/`
+- Deployed to GitHub Pages at `https://luisfeliperojasg.github.io/ecommerceavion/`
 
 ## Dependencies
 - **React:** ^18.2.0

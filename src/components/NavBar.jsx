@@ -31,7 +31,7 @@ function NavBar() {
     const handleSearch = (e) => {
         e.preventDefault()
         if (searchQuery.trim()) {
-            navigate(`/ecommerceavion/search?q=${encodeURIComponent(searchQuery.trim())}`)
+            navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`)
             setShowSearch(false)
             setSearchQuery('')
         }
@@ -41,7 +41,7 @@ function NavBar() {
     <nav className='fixed top-0 w-full flex flex-col bg-BorderGrey z-50'>
         <section className='flex h-navbar p-4 items-center'>
             <div className='grid grid-cols-2 items-center w-full'>
-                <NavLink to='/ecommerceavion/' className='flex items-center w-44'>
+                <NavLink to='/' className='flex items-center w-44'>
                     <img src={logo} alt="Logo" width={50} height={50}/>
                     <p className='px-2 font-Roboto text-Headline_one text-Dark'>Avion</p>
                     <img src={logo} alt="Logo" width={50} height={50}/>
@@ -70,7 +70,7 @@ function NavBar() {
                     </div>
                     <ul className='flex justify-around text-botton font-Roboto'>
                         <li className='pr-2 flex items-center relative'>
-                            <NavLink to='/ecommerceavion/shopping' className='pl-4' aria-label='Shopping cart'>
+                            <NavLink to='/shopping' className='pl-4' aria-label='Shopping cart'>
                                 <IoCartOutline size={24} />
                             </NavLink>
                             {cartItemsCount > 0 && (
@@ -94,7 +94,7 @@ function NavBar() {
         <section className='hidden lg:flex justify-center h-[66px] border-t-2 border-Dark'>
             <ul className='md:flex md:items-center md:text-Dark sm:hidden font-Open_Sans text-Headline_four'>
                 <li>
-                    <NavLink to='/ecommerceavion/all_products'>All Products</NavLink>
+                    <NavLink to='/all_products'>All Products</NavLink>
                 </li>
                 {
                     dataCategories?.slice(0, 5).map(category => {
@@ -102,7 +102,7 @@ function NavBar() {
                         const label = category?.name || category
                         return (
                             <li className='p-4 font-Open_Sans text-Headline_four' key={key}>
-                                <NavLink to={`/ecommerceavion/products/${category.slug}`}>{label}</NavLink>
+                                <NavLink to={`/products/${category.slug}`}>{label}</NavLink>
                             </li>
                         )
                     })

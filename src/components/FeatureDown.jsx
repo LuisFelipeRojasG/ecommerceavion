@@ -7,7 +7,7 @@ function FeatureDown() {
             <div className='max-w-[630px] h-[468px] md:w-[650px] md:h-full flex flex-col justify-center p-10 bg-DarkPrimary text-Light'>
                 <h3 className='pb-4 text-Headline_two font-Roboto '>It started with a small idea</h3>
                 <p className='pb-[150px] text-Body_small font-Open_Sans'>A global brand with local beginnings, our story begain in a small studio in South London in early 2014</p>
-                <NavLink to='/ecommerceavion/all_products' className='w-full p-4 bg-Primary text-center'>View collection</NavLink>
+                <NavLink to='/all_products' className='w-full p-4 bg-Primary text-center'>View collection</NavLink>
             </div>
             <figure className="max-w-[630px] h-[468px] md:w-[650px] md:h-full">
                 <img src={imageBlock} alt='Feature' className='w-full h-full object-cover' />
